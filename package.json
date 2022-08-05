@@ -1,6 +1,4 @@
 {
-  "name": "michail-proios-fullstack",
-  "version": "1.0.0",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -8,48 +6,33 @@
     "dev:remix": "remix watch",
     "dev:wrangler": "cross-env NODE_ENV=development wrangler pages dev ./public",
     "dev": "remix build && run-p \"dev:*\"",
-    "start": "cross-env NODE_ENV=production npm run dev:wrangler"
+    "start": "cross-env NODE_ENV=production npm run dev:wrangler",
+    "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
+    "@mantine/core": "^5.0.2",
+    "@mantine/hooks": "^5.0.2",
+    "@mantine/remix": "^5.0.2",
     "@remix-run/cloudflare": "^1.6.7",
     "@remix-run/cloudflare-pages": "^1.6.7",
     "@remix-run/react": "^1.6.7",
     "@tabler/icons": "^1.78.1",
-    "dayjs": "^1.11.4",
-    "embla-carousel-react": "^7.0.0",
     "cross-env": "^7.0.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "@emotion/react": "^11.10.0",
-    "@emotion/server": "^11.10.0",
-    "@mantine/carousel": "^5.0.2",
-    "@mantine/core": "^5.0.2",
-    "@mantine/dates": "^5.0.2",
-    "@mantine/dropzone": "^5.0.2",
-    "@mantine/ds": "^5.0.2",
-    "@mantine/form": "^5.0.2",
-    "@mantine/hooks": "^5.0.2",
-    "@mantine/modals": "^5.0.2",
-    "@mantine/notifications": "^5.0.2",
-    "@mantine/nprogress": "^5.0.2",
-    "@mantine/prism": "^5.0.2",
-    "@mantine/remix": "^5.0.2",
-    "@mantine/rte": "^5.0.2",
-    "@mantine/spotlight": "^5.0.2",
-    "@mantine/ssr": "^5.0.2",
-    "@remix-run/node": "^1.6.7",
-    "@remix-run/serve": "^1.6.7"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.14.1",
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@remix-run/dev": "^1.6.7",
     "@remix-run/eslint-config": "^1.6.7",
-    "@types/react": "^17.0.47",
-    "@types/react-dom": "^17.0.17",
-    "eslint": "^8.20.0",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "eslint": "^8.21.0",
     "npm-run-all": "^4.1.5",
+    "remix-esbuild-override": "^3.0.4",
     "typescript": "^4.7.4",
-    "wrangler": "^2.0.22"
+    "wrangler": "^2.0.24"
   },
   "engines": {
     "node": ">=14"
