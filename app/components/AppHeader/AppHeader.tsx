@@ -13,6 +13,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 
 import logo from "public/logos/Regular-Logo-Horizontal.svg";
+import { Link } from "@remix-run/react";
 
 const HEADER_HEIGHT = 60;
 
@@ -105,9 +106,9 @@ export function AppHeader({ links }: AppHeaderProps) {
   const { classes, cx } = useStyles();
 
   const items = links.map((link) => (
-    <a
+    <Link
       key={link.label}
-      href={link.link}
+      to={link.link}
       className={cx(classes.link, {
         [classes.linkActive]: active === link.link,
       })}
@@ -118,7 +119,7 @@ export function AppHeader({ links }: AppHeaderProps) {
       }}
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (
