@@ -8,6 +8,7 @@ import {
   Paper,
   Transition,
   Image,
+  Button,
 } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
@@ -145,10 +146,11 @@ export function AppHeader({ links }: AppHeaderProps) {
           size="sm"
         />
 
-        <Transition transition="slide-left" duration={200} mounted={opened}>
+        <Transition transition="pop" duration={200} mounted={opened}>
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
-              {items}
+              {/* {items} */}
+              <Button>test</Button>
             </Paper>
           )}
         </Transition>
