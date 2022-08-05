@@ -145,13 +145,13 @@ export function AppHeader({ links }: AppHeaderProps) {
           size="sm"
         />
 
-        <Transition transition="pop-top-right" duration={200} mounted={opened}>
-          {(styles) => (
-            <Paper className={classes.dropdown} withBorder style={styles}>
-              {items}
-            </Paper>
-          )}
-        </Transition>
+        {/* <Transition transition="pop-top-right" duration={200} mounted={opened}>
+          {(styles) => ( */}
+        <Paper className={classes.dropdown} withBorder>
+          {items}
+        </Paper>
+        {/* )}
+        </Transition> */}
       </Container>
     </Header>
   );
