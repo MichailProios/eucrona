@@ -7,11 +7,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { MantineProvider, AppShell } from "@mantine/core";
-import { StylesPlaceholder } from "@mantine/remix";
-import { AppHeader } from "app/components/AppHeader/AppHeader";
-import { AppFooter } from "app/components/AppFooter/AppFooter";
-// import { theme } from "./theme";
+
+import { NextUIProvider, Container, Text, css } from "@nextui-org/react";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -21,11 +18,13 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
-    </Document>
+    <NextUIProvider>
+      <Document>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </Document>
+    </NextUIProvider>
   );
 }
 
@@ -35,21 +34,18 @@ interface DocumentProps {
 
 function Document({ children }: DocumentProps) {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <html lang="en">
-        <head>
-          <Meta />
-          <Links />
-          <StylesPlaceholder />
-        </head>
-        <body>
-          {children}
-          <ScrollRestoration />
-          <Scripts />
-          {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
-        </body>
-      </html>
-    </MantineProvider>
+    <html lang="en">
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
+      </body>
+    </html>
   );
 }
 
@@ -58,47 +54,55 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  const links = [
-    {
-      link: "/overview",
-      label: "Overview",
-    },
-    {
-      link: "/services",
-      label: "Services",
-    },
-    {
-      link: "/about",
-      label: "About",
-    },
-    {
-      link: "/blog",
-      label: "Blog",
-    },
-  ];
+  // const links = [
+  //   {
+  //     link: "/overview",
+  //     label: "Overview",
+  //   },
+  //   {
+  //     link: "/services",
+  //     label: "Services",
+  //   },
+  //   {
+  //     link: "/about",
+  //     label: "About",
+  //   },
+  //   {
+  //     link: "/blog",
+  //     label: "Blog",
+  //   },
+  // ];
+
+  return { children };
+}
+// How NextUIProvider should be used on CatchBoundary
+export function CatchBoundary() {
+  const caught = useCatch();
 
   return (
-    <AppShell
-      padding={0}
-      header={<AppHeader links={links} />}
-      footer={<AppFooter links={links} />}
-    >
-      {children}
-    </AppShell>
+    <Document title={`${caught.status} ${caught.statusText}`}>
+      <NextUIProvider>
+        <Container>
+          <Text h1 color="warning" css={{ textAlign: "center" }}>
+            [CatchBoundary]: {caught.status} {caught.statusText}
+          </Text>
+        </Container>
+      </NextUIProvider>
+    </Document>
   );
 }
 
-interface ErrorBoundaryProps {
-  error: { message: string };
-}
-
-export function ErrorBoundary({ error }: ErrorBoundaryProps) {
+// How NextUIProvider should be used on ErrorBoundary
+export function ErrorBoundary({ error }: { error: Error }) {
   return (
-    <Document>
-      <Layout>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-      </Layout>
+    <Document title="Error!">
+      <NextUIProvider>
+        <Container>
+          <Text h1 color="error" css={{ textAlign: "center" }}>
+            [ErrorBoundary]: There was an error: {error.message}
+          </Text>
+        </Container>
+      </NextUIProvider>
     </Document>
   );
 }

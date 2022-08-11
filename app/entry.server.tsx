@@ -2,8 +2,7 @@ import type { EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
 import { injectStyles, createStylesServer } from "@mantine/remix";
-
-const server = createStylesServer();
+import { getCssText, NextUIProvider } from "@nextui-org/react";
 
 export default function handleRequest(
   request: Request,
@@ -11,12 +10,15 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
-  let markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  );
+  const markup = renderToString(
+    <NextUIProvider>
+      <RemixServer context={remixContext} url={request.url} />
+    </NextUIProvider>
+  ).replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`);
+
   responseHeaders.set("Content-Type", "text/html");
 
-  return new Response(`<!DOCTYPE html>${injectStyles(markup, server)}`, {
+  return new Response("<!DOCTYPE html>" + markup, {
     status: responseStatusCode,
     headers: responseHeaders,
   });

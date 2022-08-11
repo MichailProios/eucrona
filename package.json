@@ -10,12 +10,10 @@
     "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
-    "@mantine/core": "^5.0.2",
-    "@mantine/remix": "^5.0.2",
     "@remix-run/cloudflare": "^1.6.7",
     "@remix-run/cloudflare-pages": "^1.6.7",
     "@remix-run/react": "^1.6.7",
-    "@tabler/icons": "^1.78.1",
+    "@nextui-org/react": "1.0.0-beta.9",
     "cross-env": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
