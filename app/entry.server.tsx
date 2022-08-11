@@ -1,9 +1,7 @@
-import type { EntryContext } from "@remix-run/cloudflare";
-import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
-import { injectStyles, createStylesServer } from "@mantine/remix";
-import { getCssText, NextUIProvider } from "@nextui-org/react";
-
+import { RemixServer } from "remix";
+import type { EntryContext } from "remix";
+import { NextUIProvider, getCssText } from "@nextui-org/react";
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,

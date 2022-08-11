@@ -1,4 +1,3 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
 import {
   Links,
   LiveReload,
@@ -6,75 +5,51 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
-
+  useCatch,
+} from "remix";
 import { NextUIProvider, Container, Text, css } from "@nextui-org/react";
+import type { MetaFunction } from "remix";
 
-export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "Michail Proios",
-  viewport: "width=device-width,initial-scale=1",
-});
-
-export default function App() {
-  return (
-    <NextUIProvider>
-      <Document>
-        <Layout>
-          <Outlet />
-        </Layout>
-      </Document>
-    </NextUIProvider>
-  );
-}
-
-interface DocumentProps {
-  children: any;
-}
-
-function Document({ children }: DocumentProps) {
+export const meta: MetaFunction = () => {
+  return { title: "Remix-Nextui" };
+};
+function Document({
+  children,
+  title = "App title",
+}: {
+  children: React.ReactNode;
+  title?: string;
+}) {
   return (
     <html lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
+        <title>{title}</title>
         <Links />
       </head>
       <body>
         {children}
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
+        <LiveReload />
       </body>
     </html>
   );
 }
+export default function App() {
+  // throw new Error("🙀 Error");
 
-interface LayoutProps {
-  children: any;
+  return (
+    <Document>
+      <NextUIProvider>
+        <Outlet />
+      </NextUIProvider>
+    </Document>
+  );
 }
 
-function Layout({ children }: LayoutProps) {
-  // const links = [
-  //   {
-  //     link: "/overview",
-  //     label: "Overview",
-  //   },
-  //   {
-  //     link: "/services",
-  //     label: "Services",
-  //   },
-  //   {
-  //     link: "/about",
-  //     label: "About",
-  //   },
-  //   {
-  //     link: "/blog",
-  //     label: "Blog",
-  //   },
-  // ];
-
-  return { children };
-}
 // How NextUIProvider should be used on CatchBoundary
 export function CatchBoundary() {
   const caught = useCatch();
