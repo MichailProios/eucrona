@@ -25,9 +25,9 @@ export default function CallToActionWithAnnotation() {
             fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
             lineHeight={"110%"}
           >
-            Michail Proios <br />
-            <Text as={"span"} color={"orange.400"}>
-              Consulting (Coming Soon)
+            PulseTrail <br />
+            <Text as={"span"} color={"blue.400"}>
+              Solutions
             </Text>
           </Heading>
         </Stack>
