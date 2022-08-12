@@ -13,9 +13,11 @@ import { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
 import { ServerStyleContext, ClientStyleContext } from "./context";
 
+import Navbar from "app/components/Navbar";
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Michail Proios",
+  title: "PulseTrail",
   viewport: "width=device-width,initial-scale=1",
 });
 
@@ -27,6 +29,24 @@ export let links: LinksFunction = () => {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap",
     },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      href: "../public/favicon/apple-touch-icon.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      href: "../public/favicon/favicon-32x32.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      href: "../public/favicon/favicon-16x16.png",
+    },
+    { rel: "manifest", href: "../public/favicon/site.webmanifest" },
   ];
 };
 
@@ -80,7 +100,7 @@ const Document = withEmotionCache(
           {children}
           <ScrollRestoration />
           <Scripts />
-          <LiveReload />
+          {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
         </body>
       </html>
     );
@@ -91,8 +111,29 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider theme={theme}>
-        <Outlet />
+        <Navbar>
+          <Outlet />
+        </Navbar>
       </ChakraProvider>
     </Document>
   );
 }
+
+// export function CatchBoundary() {
+//   const caught = useCatch();
+
+//   return (
+//     <Document title={`${caught.status} ${caught.statusText}`}>
+
+//     </Document>
+//   );
+// }
+
+// // How NextUIProvider should be used on ErrorBoundary
+// export function ErrorBoundary({ error }: { error: Error }) {
+//   return (
+//     <Document title="Error!">
+
+//     </Document>
+//   );
+// }
