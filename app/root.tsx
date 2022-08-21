@@ -32,21 +32,21 @@ export let links: LinksFunction = () => {
     {
       rel: "apple-touch-icon",
       sizes: "180x180",
-      href: "../public/favicon/apple-touch-icon.png",
+      href: "public/favicon/apple-touch-icon.png",
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      href: "../public/favicon/favicon-32x32.png",
+      href: "public/favicon/favicon-32x32.png",
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
-      href: "../public/favicon/favicon-16x16.png",
+      href: "public/favicon/favicon-16x16.png",
     },
-    { rel: "manifest", href: "../public/favicon/site.webmanifest" },
+    { rel: "manifest", href: "public/favicon/site.webmanifest" },
   ];
 };
 
