@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useRef } from "react";
 
 import {
   Box,
@@ -6,9 +6,21 @@ import {
   Image,
   HStack,
   Button,
+  IconButton,
   Link,
   useColorModeValue,
+  useColorMode,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
+
+import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import logo from "public/logos/Logo-Sideways-Large.svg";
 
@@ -36,9 +48,9 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 );
 
 export default function Navbar({ children }: NavbarProps) {
-  const [windowDimensions, setWindowDimensions] = useState(
-    useWindowDimensions()
-  );
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box>
@@ -58,7 +70,7 @@ export default function Navbar({ children }: NavbarProps) {
             alt="PulseTrail-Sideways"
             draggable="false"
           />
-          <HStack spacing="24px">
+          <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
             {Links.map((link) => (
               <NavLink key={link}>{link}</NavLink>
             ))}
@@ -66,6 +78,9 @@ export default function Navbar({ children }: NavbarProps) {
         </HStack>
 
         <HStack spacing="24px">
+          <IconButton aria-label="Color Scheme" onClick={toggleColorMode}>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </IconButton>
           <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
             Sign In
           </Button>
@@ -80,9 +95,36 @@ export default function Navbar({ children }: NavbarProps) {
           >
             Sign Up
           </Button>
+
+          <IconButton aria-label="Open Drawer" ref={btnRef} onClick={onOpen}>
+            <HamburgerIcon />
+          </IconButton>
         </HStack>
       </Flex>
-      <Box h={`calc(${windowDimensions.height}px - 64px)`}>{children}</Box>
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Create your account</DrawerHeader>
+
+          <DrawerBody>
+            <h2>test</h2>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button variant="outline" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue">Save</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+      {children}
     </Box>
   );
 }
