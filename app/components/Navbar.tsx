@@ -49,7 +49,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 
 export default function Navbar({ children }: NavbarProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const btnRef = useRef<HTMLButtonElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -81,7 +81,12 @@ export default function Navbar({ children }: NavbarProps) {
           <IconButton aria-label="Color Scheme" onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </IconButton>
-          <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
+          <Button
+            fontSize={"sm"}
+            fontWeight={400}
+            variant={"link"}
+            display={{ base: "none", lg: "flex" }}
+          >
             Sign In
           </Button>
           <Button
@@ -92,6 +97,7 @@ export default function Navbar({ children }: NavbarProps) {
             _hover={{
               bg: "pink.300",
             }}
+            display={{ base: "none", lg: "flex" }}
           >
             Sign Up
           </Button>
