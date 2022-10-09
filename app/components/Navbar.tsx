@@ -13,11 +13,12 @@ import {
   Drawer,
   DrawerBody,
   DrawerFooter,
-  DrawerHeader,
+  VStack,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
+  DrawerHeader,
 } from "@chakra-ui/react";
 
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
@@ -32,7 +33,22 @@ interface NavbarProps {
 
 const Links = ["Dashboard", "Projects", "Team", "About", "Services"];
 
-const NavLink = ({ children }: { children: ReactNode }) => (
+const NavLinkAppbar = ({ children }: { children: ReactNode }) => (
+  <Link
+    px={2}
+    py={1}
+    rounded={"md"}
+    _hover={{
+      textDecoration: "none",
+      bg: useColorModeValue("gray.200", "gray.700"),
+    }}
+    href={"#"}
+  >
+    {children}
+  </Link>
+);
+
+const NavLinkDrawer = ({ children }: { children: ReactNode }) => (
   <Link
     px={2}
     py={1}
@@ -72,7 +88,7 @@ export default function Navbar({ children }: NavbarProps) {
           />
           <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
             {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+              <NavLinkAppbar key={link}>{link}</NavLinkAppbar>
             ))}
           </HStack>
         </HStack>
@@ -84,7 +100,6 @@ export default function Navbar({ children }: NavbarProps) {
           <Button
             fontSize={"sm"}
             fontWeight={400}
-            variant={"link"}
             display={{ base: "none", lg: "flex" }}
           >
             Sign In
@@ -102,7 +117,12 @@ export default function Navbar({ children }: NavbarProps) {
             Sign Up
           </Button>
 
-          <IconButton aria-label="Open Drawer" ref={btnRef} onClick={onOpen}>
+          <IconButton
+            aria-label="Open Drawer"
+            ref={btnRef}
+            onClick={onOpen}
+            display={{ lg: "none" }}
+          >
             <HamburgerIcon />
           </IconButton>
         </HStack>
@@ -114,12 +134,17 @@ export default function Navbar({ children }: NavbarProps) {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
+
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
 
+          <DrawerHeader>Menu</DrawerHeader>
           <DrawerBody>
-            <h2>test</h2>
+            <VStack spacing="24px" align="stretch">
+              {Links.map((link) => (
+                <NavLinkDrawer key={link}>{link}</NavLinkDrawer>
+              ))}
+            </VStack>
           </DrawerBody>
 
           <DrawerFooter>
