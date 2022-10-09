@@ -40,7 +40,7 @@ const NavLinkAppbar = ({ children }: { children: ReactNode }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={"#"}
+    href={""}
   >
     {children}
   </Link>
@@ -60,7 +60,7 @@ const NavLinkDrawer = ({
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.800"),
     }}
-    href={"#"}
+    href={""}
     onClick={closeDialog}
   >
     {children}
@@ -77,60 +77,69 @@ export default function Navbar({ children }: NavbarProps) {
       <Flex
         h={16}
         alignItems={"center"}
-        justifyContent={"space-between"}
+        justifyContent={"center"}
         px={12}
         bg={useColorModeValue("gray.100", "gray.900")}
       >
-        <HStack spacing="24px">
-          <Image
-            objectFit="contain"
-            h={55}
-            w={"auto"}
-            src={logo}
-            alt="PulseTrail-Sideways"
-            draggable="false"
-          />
-          <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
-            {Links.map((link) => (
-              <NavLinkAppbar key={link}>{link}</NavLinkAppbar>
-            ))}
+        <Flex
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          w={"100%"}
+          maxW={"1920px"}
+        >
+          <HStack spacing="24px">
+            <Image
+              style={{ fill: "black" }}
+              objectFit="contain"
+              h={55}
+              w={"auto"}
+              src={logo}
+              alt="PulseTrail-Sideways"
+              draggable="false"
+            />
+            <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
+              {Links.map((link) => (
+                <NavLinkAppbar key={link}>{link}</NavLinkAppbar>
+              ))}
+            </HStack>
           </HStack>
-        </HStack>
 
-        <HStack spacing="24px">
-          <IconButton aria-label="Color Scheme" onClick={toggleColorMode}>
-            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </IconButton>
-          <Button
-            fontSize={"sm"}
-            fontWeight={400}
-            display={{ base: "none", lg: "flex" }}
-          >
-            Sign In
-          </Button>
-          <Button
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            _hover={{
-              bg: "pink.300",
-            }}
-            display={{ base: "none", lg: "flex" }}
-          >
-            Sign Up
-          </Button>
+          <HStack spacing="24px">
+            <IconButton aria-label="Color Scheme" onClick={toggleColorMode}>
+              {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            </IconButton>
+            <Button
+              fontSize={"sm"}
+              fontWeight={400}
+              display={{ base: "none", lg: "flex" }}
+            >
+              Sign In
+            </Button>
+            <Button
+              fontSize={"sm"}
+              fontWeight={600}
+              color={"white"}
+              bg={"pink.400"}
+              _hover={{
+                bg: "pink.300",
+              }}
+              display={{ base: "none", lg: "flex" }}
+            >
+              Sign Up
+            </Button>
 
-          <IconButton
-            aria-label="Open Drawer"
-            ref={btnRef}
-            onClick={onOpen}
-            display={{ lg: "none" }}
-          >
-            <HamburgerIcon />
-          </IconButton>
-        </HStack>
+            <IconButton
+              aria-label="Open Drawer"
+              ref={btnRef}
+              onClick={onOpen}
+              display={{ lg: "none" }}
+            >
+              <HamburgerIcon />
+            </IconButton>
+          </HStack>
+        </Flex>
       </Flex>
+
       <Drawer
         isOpen={isOpen}
         placement="right"
@@ -142,7 +151,7 @@ export default function Navbar({ children }: NavbarProps) {
         <DrawerContent>
           {/* <DrawerCloseButton /> */}
 
-          <DrawerHeader p={0} alignSelf="center">
+          <DrawerHeader p={2} alignSelf="center">
             <Image
               objectFit="contain"
               h={55}
@@ -153,7 +162,7 @@ export default function Navbar({ children }: NavbarProps) {
             />
           </DrawerHeader>
           <DrawerBody>
-            <VStack spacing="24px" align="stretch">
+            <VStack spacing="16px" align="stretch">
               {Links.map((link) => (
                 <NavLinkDrawer key={link} closeDialog={onClose}>
                   {link}
@@ -162,12 +171,25 @@ export default function Navbar({ children }: NavbarProps) {
             </VStack>
           </DrawerBody>
 
-          {/* <DrawerFooter>
-            <Button variant="outline" mr={3}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter> */}
+          <DrawerFooter alignSelf="center">
+            <HStack spacing="24px">
+              <Button fontSize={"sm"} width={"100%"} fontWeight={400}>
+                Sign In
+              </Button>
+              <Button
+                width={"100%"}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"pink.400"}
+                _hover={{
+                  bg: "pink.300",
+                }}
+              >
+                Sign Up
+              </Button>
+            </HStack>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
       {children}

@@ -3,17 +3,14 @@ import {
   Heading,
   Container,
   Text,
-  Button,
   Stack,
-  Icon,
   useColorModeValue,
-  createIcon,
 } from "@chakra-ui/react";
 
 export default function CallToActionWithAnnotation() {
   return (
     <>
-      <Container maxW={"3xl"}>
+      <Container maxW={"1920px"}>
         <Stack
           as={Box}
           textAlign={"center"}
@@ -28,6 +25,10 @@ export default function CallToActionWithAnnotation() {
             PulseTrail <br />
             <Text as={"span"} color={"blue.400"}>
               Solutions
+            </Text>
+            <br /> <br />
+            <Text as={"span"} color={useColorModeValue("gray.300", "gray.500")}>
+              Under Construction
             </Text>
           </Heading>
         </Stack>
