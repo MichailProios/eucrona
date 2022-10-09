@@ -23,9 +23,7 @@ import {
 
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import logo from "public/logos/Logo-Sideways-Large.svg";
-
-import useWindowDimensions from "~/utils/hooks/useWindowDimensions";
+import logo from "public/logos/Logo-Sideways-Large-No-Padding.svg";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -86,7 +84,7 @@ export default function Navbar({ children }: NavbarProps) {
         <HStack spacing="24px">
           <Image
             objectFit="contain"
-            h={160}
+            h={55}
             w={"auto"}
             src={logo}
             alt="PulseTrail-Sideways"
@@ -142,9 +140,18 @@ export default function Navbar({ children }: NavbarProps) {
         <DrawerOverlay />
 
         <DrawerContent>
-          <DrawerCloseButton />
+          {/* <DrawerCloseButton /> */}
 
-          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerHeader p={0} alignSelf="center">
+            <Image
+              objectFit="contain"
+              h={55}
+              w={"auto"}
+              src={logo}
+              alt="PulseTrail-Sideways"
+              draggable="false"
+            />
+          </DrawerHeader>
           <DrawerBody>
             <VStack spacing="24px" align="stretch">
               {Links.map((link) => (
