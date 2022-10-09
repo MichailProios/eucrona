@@ -48,16 +48,22 @@ const NavLinkAppbar = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-const NavLinkDrawer = ({ children }: { children: ReactNode }) => (
+const NavLinkDrawer = ({
+  children,
+  closeDialog,
+}: {
+  children: ReactNode;
+  closeDialog: any;
+}) => (
   <Link
-    px={2}
-    py={1}
+    p={2}
     rounded={"md"}
     _hover={{
       textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
+      bg: useColorModeValue("gray.200", "gray.800"),
     }}
     href={"#"}
+    onClick={closeDialog}
   >
     {children}
   </Link>
@@ -142,17 +148,19 @@ export default function Navbar({ children }: NavbarProps) {
           <DrawerBody>
             <VStack spacing="24px" align="stretch">
               {Links.map((link) => (
-                <NavLinkDrawer key={link}>{link}</NavLinkDrawer>
+                <NavLinkDrawer key={link} closeDialog={onClose}>
+                  {link}
+                </NavLinkDrawer>
               ))}
             </VStack>
           </DrawerBody>
 
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
+          {/* <DrawerFooter>
+            <Button variant="outline" mr={3}>
               Cancel
             </Button>
             <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
+          </DrawerFooter> */}
         </DrawerContent>
       </Drawer>
       {children}
