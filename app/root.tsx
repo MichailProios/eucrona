@@ -9,7 +9,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
+import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
 import { ServerStyleContext, ClientStyleContext } from "./context";
 
@@ -32,21 +32,30 @@ export let links: LinksFunction = () => {
     {
       rel: "apple-touch-icon",
       sizes: "180x180",
-      href: "public/favicon/apple-touch-icon.png",
+      href: "/favicon/apple-touch-icon.png",
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      href: "public/favicon/favicon-32x32.png",
+      href: "/favicon/favicon-32x32.png",
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
-      href: "public/favicon/favicon-16x16.png",
+      href: "/favicon/favicon-16x16.png",
     },
-    { rel: "manifest", href: "public/favicon/site.webmanifest" },
+    {
+      rel: "icon",
+      type: "image/png",
+      href: "/favicon/favicon.ico",
+    },
+    {
+      rel: "manifest",
+
+      href: "/favicon/site.webmanifest",
+    },
   ];
 };
 
