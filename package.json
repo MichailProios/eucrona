@@ -21,6 +21,7 @@
     "framer-motion": "^7.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
     "remix": "^1.7.2"
   },
   "devDependencies": {

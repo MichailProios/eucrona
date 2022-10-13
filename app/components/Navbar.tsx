@@ -16,7 +16,6 @@ import {
   VStack,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
   DrawerHeader,
 } from "@chakra-ui/react";
@@ -29,9 +28,19 @@ interface NavbarProps {
   children: React.ReactNode;
 }
 
-const Links = ["Dashboard", "Projects", "Team", "About", "Services"];
+const Links = [
+  { section: "Features", url: "/Features" },
+  { section: "Features1", url: "/Features" },
+  { section: "Features2", url: "/Features" },
+];
 
-const NavLinkAppbar = ({ children }: { children: ReactNode }) => (
+const NavLinkAppbar = ({
+  children,
+  href,
+}: {
+  children: ReactNode;
+  href: string;
+}) => (
   <Link
     px={2}
     py={1}
@@ -40,7 +49,7 @@ const NavLinkAppbar = ({ children }: { children: ReactNode }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={""}
+    href={href}
   >
     {children}
   </Link>
@@ -49,9 +58,11 @@ const NavLinkAppbar = ({ children }: { children: ReactNode }) => (
 const NavLinkDrawer = ({
   children,
   closeDialog,
+  href,
 }: {
   children: ReactNode;
   closeDialog: any;
+  href: string;
 }) => (
   <Link
     p={2}
@@ -60,7 +71,7 @@ const NavLinkDrawer = ({
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.800"),
     }}
-    href={""}
+    href={href}
     onClick={closeDialog}
   >
     {children}
@@ -88,18 +99,21 @@ export default function Navbar({ children }: NavbarProps) {
           maxW={"1920px"}
         >
           <HStack spacing="24px">
-            <Image
-              style={{ fill: "black" }}
-              objectFit="contain"
-              h={55}
-              w={"auto"}
-              src={logo}
-              alt="PulseTrail-Sideways"
-              draggable="false"
-            />
+            <Link href={"/"}>
+              <Image
+                objectFit="contain"
+                h={55}
+                w={"auto"}
+                src={logo}
+                alt="PulseTrail-Sideways"
+                draggable="false"
+              />
+            </Link>
             <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
-              {Links.map((link) => (
-                <NavLinkAppbar key={link}>{link}</NavLinkAppbar>
+              {Links.map((link, index) => (
+                <NavLinkAppbar key={index} href={link.url}>
+                  {link.section}
+                </NavLinkAppbar>
               ))}
             </HStack>
           </HStack>
@@ -163,9 +177,13 @@ export default function Navbar({ children }: NavbarProps) {
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing="16px" align="stretch">
-              {Links.map((link) => (
-                <NavLinkDrawer key={link} closeDialog={onClose}>
-                  {link}
+              {Links.map((link, index) => (
+                <NavLinkDrawer
+                  key={index}
+                  closeDialog={onClose}
+                  href={link.url}
+                >
+                  {link.section}
                 </NavLinkDrawer>
               ))}
             </VStack>
