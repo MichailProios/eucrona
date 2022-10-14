@@ -21,7 +21,7 @@ import {
   DrawerHeader,
 } from "@chakra-ui/react";
 
-import { NavLink } from "@remix-run/react";
+import { NavLink, useLoaderData } from "@remix-run/react";
 
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
@@ -29,6 +29,7 @@ import logo from "public/logos/Logo-Sideways-Large-No-Padding.svg";
 
 interface NavbarProps {
   children: React.ReactNode;
+  cookies: string;
 }
 
 const Links = [
@@ -68,7 +69,7 @@ const NavLinkDrawer = ({
   closeDialog: any;
   href: string;
 }) => (
-  <NavLink to={href}>
+  <NavLink to={href} style={{ width: "100%" }}>
     <chakra.span
       p={2}
       rounded={"md"}
@@ -77,16 +78,25 @@ const NavLinkDrawer = ({
         bg: useColorModeValue("gray.200", "gray.800"),
       }}
       onClick={closeDialog}
+      w={"100%"}
     >
       {children}
     </chakra.span>
   </NavLink>
 );
 
-export default function Navbar({ children }: NavbarProps) {
+export const loader = async ({ request }: { request: Request }) => {
+  const cookieHeader = request.headers.get("Cookie");
+
+  return cookieHeader;
+};
+
+export default function Navbar({ children, cookies }: NavbarProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  cookies = useLoaderData();
 
   return (
     <Box>
@@ -101,7 +111,7 @@ export default function Navbar({ children }: NavbarProps) {
           alignItems={"center"}
           justifyContent={"space-between"}
           w={"100%"}
-          maxW={"1920px"}
+          maxW={"1600px"}
         >
           <HStack spacing="24px">
             <NavLink to={"/"}>
@@ -124,7 +134,12 @@ export default function Navbar({ children }: NavbarProps) {
           </HStack>
 
           <HStack spacing="24px">
-            <IconButton aria-label="Color Scheme" onClick={toggleColorMode}>
+            <IconButton
+              aria-label="Color Scheme"
+              onClick={() => {
+                toggleColorMode();
+              }}
+            >
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </IconButton>
             <Button

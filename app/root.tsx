@@ -18,9 +18,11 @@ import {
 } from "@remix-run/react";
 import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
-import { ServerStyleContext, ClientStyleContext } from "./context";
+import { ServerStyleContext, ClientStyleContext } from "app/context";
 
 import Navbar from "app/components/Navbar";
+
+import { loader as navbarLoader } from "app/components/Navbar";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -74,17 +76,11 @@ const colors = {
   },
 };
 
-// export const config = {
-//   useSystemColorMode: true,
-// };
-
-export const loader = async ({ request }: { request: Request }) => {
-  const cookieHeader = request.headers.get("Cookie");
-
-  return cookieHeader;
+export const config = {
+  useSystemColorMode: true,
 };
 
-const theme = extendTheme({ colors });
+const theme = extendTheme({ config, colors });
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -130,15 +126,19 @@ const Document = withEmotionCache(
 );
 
 export default function App() {
-  const cookies = useLoaderData();
+  let cookies = "";
 
   return (
     <Document>
       <ChakraProvider
         theme={theme}
-        colorModeManager={cookieStorageManagerSSR(cookies)}
+        colorModeManager={
+          cookies.length > 0
+            ? cookieStorageManagerSSR(cookies)
+            : localStorageManager
+        }
       >
-        <Navbar>
+        <Navbar cookies={cookies}>
           <Outlet />
         </Navbar>
       </ChakraProvider>
