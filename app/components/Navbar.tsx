@@ -1,6 +1,7 @@
 import { ReactNode, useState, useRef } from "react";
 
 import {
+  chakra,
   Box,
   Flex,
   Image,
@@ -20,6 +21,8 @@ import {
   DrawerHeader,
 } from "@chakra-ui/react";
 
+import { NavLink } from "@remix-run/react";
+
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import logo from "public/logos/Logo-Sideways-Large-No-Padding.svg";
@@ -29,9 +32,9 @@ interface NavbarProps {
 }
 
 const Links = [
-  { section: "Features", url: "/Features" },
-  { section: "Features1", url: "/Features" },
-  { section: "Features2", url: "/Features" },
+  { section: "Features", url: "Features" },
+  { section: "Features1", url: "Features" },
+  { section: "Features2", url: "Features" },
 ];
 
 const NavLinkAppbar = ({
@@ -41,18 +44,19 @@ const NavLinkAppbar = ({
   children: ReactNode;
   href: string;
 }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={href}
-  >
-    {children}
-  </Link>
+  <NavLink to={href}>
+    <chakra.span
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+    >
+      {children}
+    </chakra.span>
+  </NavLink>
 );
 
 const NavLinkDrawer = ({
@@ -64,18 +68,19 @@ const NavLinkDrawer = ({
   closeDialog: any;
   href: string;
 }) => (
-  <Link
-    p={2}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.800"),
-    }}
-    href={href}
-    onClick={closeDialog}
-  >
-    {children}
-  </Link>
+  <NavLink to={href}>
+    <chakra.span
+      p={2}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.800"),
+      }}
+      onClick={closeDialog}
+    >
+      {children}
+    </chakra.span>
+  </NavLink>
 );
 
 export default function Navbar({ children }: NavbarProps) {
@@ -99,7 +104,7 @@ export default function Navbar({ children }: NavbarProps) {
           maxW={"1920px"}
         >
           <HStack spacing="24px">
-            <Link href={"/"}>
+            <NavLink to={"/"}>
               <Image
                 objectFit="contain"
                 h={55}
@@ -108,7 +113,7 @@ export default function Navbar({ children }: NavbarProps) {
                 alt="PulseTrail-Sideways"
                 draggable="false"
               />
-            </Link>
+            </NavLink>
             <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
               {Links.map((link, index) => (
                 <NavLinkAppbar key={index} href={link.url}>

@@ -1,6 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import { extendTheme, ChakraProvider } from "@chakra-ui/react";
+import {
+  extendTheme,
+  ChakraProvider,
+  cookieStorageManagerSSR,
+  localStorageManager,
+} from "@chakra-ui/react";
+
 import {
   Links,
   LiveReload,
@@ -8,6 +14,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
@@ -67,6 +74,16 @@ const colors = {
   },
 };
 
+// export const config = {
+//   useSystemColorMode: true,
+// };
+
+export const loader = async ({ request }: { request: Request }) => {
+  const cookieHeader = request.headers.get("Cookie");
+
+  return cookieHeader;
+};
+
 const theme = extendTheme({ colors });
 
 interface DocumentProps {
@@ -113,9 +130,14 @@ const Document = withEmotionCache(
 );
 
 export default function App() {
+  const cookies = useLoaderData();
+
   return (
     <Document>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider
+        theme={theme}
+        colorModeManager={cookieStorageManagerSSR(cookies)}
+      >
         <Navbar>
           <Outlet />
         </Navbar>
@@ -123,16 +145,6 @@ export default function App() {
     </Document>
   );
 }
-
-// export function CatchBoundary() {
-//   const caught = useCatch();
-
-//   return (
-//     <Document title={`${caught.status} ${caught.statusText}`}>
-
-//     </Document>
-//   );
-// }
 
 // // How NextUIProvider should be used on ErrorBoundary
 // export function ErrorBoundary({ error }: { error: Error }) {
