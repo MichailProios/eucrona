@@ -21,6 +21,7 @@ import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 import { ServerStyleContext, ClientStyleContext } from "app/context";
 
 import Navbar from "app/components/Navbar";
+import NotFound from "app/components/NotFound";
 
 import { loader as navbarLoader } from "app/components/Navbar";
 
@@ -70,17 +71,39 @@ export let links: LinksFunction = () => {
 
 const colors = {
   brand: {
-    900: "#1a365d",
-    800: "#153e75",
-    700: "#2a69ac",
+    light: "linear(130deg, rgba(57,169,241,1) 20%, rgba(14,198,203,1) 80%)",
+    main: "linear(130deg, rgba(57,169,241,1) 20%, rgba(14,198,203,1) 80%)",
+    dark: "linear(130deg, rgba(6,118,190,1) 20%, rgba(0,147,152,1) 80%)",
   },
 };
 
-export const config = {
+const config = {
   useSystemColorMode: true,
 };
 
-const theme = extendTheme({ config, colors });
+const components = {
+  Button: {
+    variants: {
+      primary: {
+        transition: "all 0.5s",
+        bgGradient:
+          "linear(130deg, rgba(57,169,241,1) 20%, rgba(14,198,203,1) 80%)",
+        color: "white",
+
+        _hover: {
+          bgGradient:
+            "linear(130deg, rgba(32,144,216,1) 20%, rgba(0,173,178,1) 80%)",
+        },
+        _active: {
+          bgGradient:
+            "linear(130deg, rgba(6,118,190,1) 20%, rgba(0,147,152,1) 80%)",
+        },
+      },
+    },
+  },
+};
+
+const theme = extendTheme({ config, colors, components });
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -146,11 +169,44 @@ export default function App() {
   );
 }
 
-// // How NextUIProvider should be used on ErrorBoundary
-// export function ErrorBoundary({ error }: { error: Error }) {
-//   return (
-//     <Document title="Error!">
+export function ErrorBoundary({ error }: { error: Error }) {
+  let cookies = "";
 
-//     </Document>
-//   );
-// }
+  return (
+    <Document>
+      <ChakraProvider
+        theme={theme}
+        colorModeManager={
+          cookies.length > 0
+            ? cookieStorageManagerSSR(cookies)
+            : localStorageManager
+        }
+      >
+        <Navbar cookies={cookies}>
+          <NotFound />
+        </Navbar>
+      </ChakraProvider>
+    </Document>
+  );
+}
+
+export function CatchBoundary() {
+  let cookies = "";
+
+  return (
+    <Document>
+      <ChakraProvider
+        theme={theme}
+        colorModeManager={
+          cookies.length > 0
+            ? cookieStorageManagerSSR(cookies)
+            : localStorageManager
+        }
+      >
+        <Navbar cookies={cookies}>
+          <NotFound />
+        </Navbar>
+      </ChakraProvider>
+    </Document>
+  );
+}

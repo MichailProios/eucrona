@@ -174,20 +174,17 @@ const Index = () => {
               spacing={{ base: 0, sm: 2 }}
               flexWrap="wrap"
             >
-              <chakra.button
+              <Button
                 h={12}
                 px={6}
-                bgGradient="linear(to-br, #228be6, #15aabf)"
-                color="white"
-                _hover={{ bgGradient: "linear(to-br, #228be6, #228be6)" }}
-                variant="solid"
+                variant="primary"
                 size="lg"
                 rounded="md"
                 fontWeight="bold"
                 mb={{ base: 2, sm: 0 }}
               >
-                <chakra.span> Get started </chakra.span>
-              </chakra.button>
+                Get started
+              </Button>
               <Flex
                 border="1px solid"
                 borderColor="gray.700"
