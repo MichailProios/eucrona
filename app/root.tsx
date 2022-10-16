@@ -14,7 +14,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from "@remix-run/react";
 import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
@@ -22,8 +21,6 @@ import { ServerStyleContext, ClientStyleContext } from "app/context";
 
 import Navbar from "app/components/Navbar";
 import NotFound from "app/components/NotFound";
-
-import { loader as navbarLoader } from "app/components/Navbar";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -70,10 +67,17 @@ export let links: LinksFunction = () => {
 };
 
 const colors = {
-  brand: {
-    light: "linear(130deg, rgba(57,169,241,1) 20%, rgba(14,198,203,1) 80%)",
-    main: "linear(130deg, rgba(57,169,241,1) 20%, rgba(14,198,203,1) 80%)",
-    dark: "linear(130deg, rgba(6,118,190,1) 20%, rgba(0,147,152,1) 80%)",
+  primary: {
+    "50": "#f0f9fe",
+    "100": "#c3e5fb",
+    "200": "#8dcdf7",
+    "300": "#45aef2",
+    "400": "#349cde",
+    "500": "#2c83bb",
+    "600": "#256f9e",
+    "700": "#1e597f",
+    "800": "#194b6b",
+    "900": "#12364d",
   },
 };
 
@@ -85,18 +89,18 @@ const components = {
   Button: {
     variants: {
       primary: {
-        transition: "all 0.5s",
-        bgGradient:
-          "linear(130deg, rgba(57,169,241,1) 20%, rgba(14,198,203,1) 80%)",
+        bgGradient: "linear(to-br, #39a9f1, #00438b)",
         color: "white",
 
         _hover: {
-          bgGradient:
-            "linear(130deg, rgba(32,144,216,1) 20%, rgba(0,173,178,1) 80%)",
+          bgGradient: "linear(to-br, #2c9ce4, #00367e)",
         },
         _active: {
-          bgGradient:
-            "linear(130deg, rgba(6,118,190,1) 20%, rgba(0,147,152,1) 80%)",
+          bgGradient: "linear(to-br, #2090d8, #002971)",
+        },
+
+        _disabled: {
+          bgGradient: "linear(to-br, #39a9f1, #00438b)",
         },
       },
     },
@@ -137,7 +141,7 @@ const Document = withEmotionCache(
             />
           ))}
         </head>
-        <body>
+        <body style={{ overflow: "overlay" }}>
           {children}
           <ScrollRestoration />
           <Scripts />

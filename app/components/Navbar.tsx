@@ -18,9 +18,12 @@ import {
   DrawerContent,
   useDisclosure,
   DrawerHeader,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 
 import { NavLink, useLoaderData } from "@remix-run/react";
+
+// import Footer from "app/components/Footer";
 
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
@@ -33,9 +36,10 @@ interface NavbarProps {
 }
 
 const Links = [
+  { section: "Home", url: "" },
   { section: "Features", url: "Features" },
-  { section: "Features1", url: "Features1" },
-  { section: "Features2", url: "Features2" },
+  { section: "Test", url: "Test" },
+  { section: "No Page", url: "nopage" },
 ];
 
 const NavLinkAppbar = ({
@@ -46,8 +50,7 @@ const NavLinkAppbar = ({
   href: string;
 }) => (
   <chakra.span
-    px={3}
-    py={1.5}
+    p={2}
     w={"6em"}
     textAlign="center"
     rounded={"md"}
@@ -76,6 +79,7 @@ const NavLinkDrawer = ({
   <chakra.span
     p={2}
     rounded={"md"}
+    textAlign={"center"}
     _hover={{
       textDecoration: "none",
       color: "brand.main",
@@ -110,8 +114,10 @@ export default function Navbar({ children, cookies }: NavbarProps) {
         h={16}
         alignItems={"center"}
         justifyContent={"center"}
-        px={12}
+        px={{ base: 6, lg: 12 }}
         bg={useColorModeValue("gray.100", "gray.900")}
+        position="fixed"
+        w={"100%"}
       >
         <Flex
           alignItems={"center"}
@@ -119,7 +125,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           w={"100%"}
           maxW={"1400px"}
         >
-          <HStack spacing="24px">
+          <HStack spacing="40px">
             <NavLink to={"/"}>
               <Image
                 objectFit="contain"
@@ -139,7 +145,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             </HStack>
           </HStack>
 
-          <HStack spacing="24px">
+          <HStack spacing="12px">
             <IconButton
               aria-label="Color Scheme"
               onClick={() => {
@@ -158,7 +164,8 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             <Button
               fontSize={"sm"}
               fontWeight={600}
-              variant="primary"
+              variant="solid"
+              colorScheme={"primary"}
               display={{ base: "none", lg: "flex" }}
             >
               Sign Up
@@ -185,17 +192,17 @@ export default function Navbar({ children, cookies }: NavbarProps) {
         <DrawerOverlay />
 
         <DrawerContent>
-          {/* <DrawerCloseButton /> */}
-
           <DrawerHeader p={2} alignSelf="center">
-            <Image
-              objectFit="contain"
-              h={55}
-              w={"auto"}
-              src={colorMode === "light" ? logo : logoDark}
-              alt="PulseTrail-Sideways"
-              draggable="false"
-            />
+            <NavLink to={"/"} onClick={onClose}>
+              <Image
+                objectFit="contain"
+                h={55}
+                w={"auto"}
+                src={colorMode === "light" ? logo : logoDark}
+                alt="PulseTrail-Sideways"
+                draggable="false"
+              />
+            </NavLink>
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing="16px" align="stretch">
@@ -211,8 +218,8 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             </VStack>
           </DrawerBody>
 
-          <DrawerFooter alignSelf="center">
-            <HStack spacing="24px">
+          <DrawerFooter alignSelf="center" width={"100%"}>
+            <VStack spacing="12px" width={"100%"}>
               <Button fontSize={"sm"} width={"100%"} fontWeight={400}>
                 Sign In
               </Button>
@@ -220,15 +227,18 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 width={"100%"}
                 fontSize={"sm"}
                 fontWeight={600}
-                variant="primary"
+                variant="solid"
+                colorScheme={"primary"}
               >
                 Sign Up
               </Button>
-            </HStack>
+            </VStack>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      {children}
+      <Box h={16} />
+      <Box>{children}</Box>
+      {/* <Footer /> */}
     </Box>
   );
 }
