@@ -1,4 +1,4 @@
-import { ReactNode, useState, useRef } from "react";
+import { ReactNode, useState, useRef, forwardRef } from "react";
 
 import {
   chakra,
@@ -8,7 +8,6 @@ import {
   HStack,
   Button,
   IconButton,
-  Link,
   useColorModeValue,
   useColorMode,
   Drawer,
@@ -26,16 +25,17 @@ import { NavLink, useLoaderData } from "@remix-run/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import logo from "public/logos/Logo-Sideways-Large-No-Padding.svg";
+import logoDark from "public/logos/Logo-Sideways-Large-No-Padding-DarkMode.svg";
 
 interface NavbarProps {
-  children: React.ReactNode;
+  children: ReactNode;
   cookies: string;
 }
 
 const Links = [
   { section: "Features", url: "Features" },
-  { section: "Features1", url: "Features" },
-  { section: "Features2", url: "Features" },
+  { section: "Features1", url: "Features1" },
+  { section: "Features2", url: "Features2" },
 ];
 
 const NavLinkAppbar = ({
@@ -45,19 +45,23 @@ const NavLinkAppbar = ({
   children: ReactNode;
   href: string;
 }) => (
-  <NavLink to={href}>
-    <chakra.span
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-      }}
-    >
-      {children}
-    </chakra.span>
-  </NavLink>
+  <chakra.span
+    px={3}
+    py={1.5}
+    w={"6em"}
+    textAlign="center"
+    rounded={"md"}
+    _hover={{
+      textDecoration: "none",
+      color: "brand.main",
+      bg: useColorModeValue("gray.200", "gray.700"),
+    }}
+    draggable="false"
+    as={NavLink}
+    to={href}
+  >
+    {children}
+  </chakra.span>
 );
 
 const NavLinkDrawer = ({
@@ -69,20 +73,22 @@ const NavLinkDrawer = ({
   closeDialog: any;
   href: string;
 }) => (
-  <NavLink to={href} style={{ width: "100%" }}>
-    <chakra.span
-      p={2}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.800"),
-      }}
-      onClick={closeDialog}
-      w={"100%"}
-    >
-      {children}
-    </chakra.span>
-  </NavLink>
+  <chakra.span
+    p={2}
+    rounded={"md"}
+    _hover={{
+      textDecoration: "none",
+      color: "brand.main",
+      bg: useColorModeValue("gray.200", "gray.800"),
+    }}
+    onClick={closeDialog}
+    w={"100%"}
+    draggable="false"
+    as={NavLink}
+    to={href}
+  >
+    {children}
+  </chakra.span>
 );
 
 export const loader = async ({ request }: { request: Request }) => {
@@ -111,7 +117,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           alignItems={"center"}
           justifyContent={"space-between"}
           w={"100%"}
-          maxW={"1600px"}
+          maxW={"1400px"}
         >
           <HStack spacing="24px">
             <NavLink to={"/"}>
@@ -119,7 +125,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 objectFit="contain"
                 h={55}
                 w={"auto"}
-                src={logo}
+                src={colorMode === "light" ? logo : logoDark}
                 alt="PulseTrail-Sideways"
                 draggable="false"
               />
@@ -152,11 +158,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             <Button
               fontSize={"sm"}
               fontWeight={600}
-              color={"white"}
-              bg={"pink.400"}
-              _hover={{
-                bg: "pink.300",
-              }}
+              variant="primary"
               display={{ base: "none", lg: "flex" }}
             >
               Sign Up
@@ -190,7 +192,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
               objectFit="contain"
               h={55}
               w={"auto"}
-              src={logo}
+              src={colorMode === "light" ? logo : logoDark}
               alt="PulseTrail-Sideways"
               draggable="false"
             />
@@ -218,11 +220,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 width={"100%"}
                 fontSize={"sm"}
                 fontWeight={600}
-                color={"white"}
-                bg={"pink.400"}
-                _hover={{
-                  bg: "pink.300",
-                }}
+                variant="primary"
               >
                 Sign Up
               </Button>
