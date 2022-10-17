@@ -159,15 +159,18 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             >
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </IconButton>
-            <Link href="https://cloud.pulsetrail.com">
-              <Button
-                fontSize={"sm"}
-                fontWeight={400}
-                display={{ base: "none", lg: "flex" }}
-              >
-                Sign In
-              </Button>
-            </Link>
+
+            <Button
+              fontSize={"sm"}
+              fontWeight={400}
+              display={{ base: "none", lg: "flex" }}
+              as={Link}
+              href="https://cloud.pulsetrail.com"
+              style={{ textDecoration: "none" }}
+            >
+              Sign In
+            </Button>
+
             <Button
               fontSize={"sm"}
               fontWeight={600}
@@ -227,9 +230,17 @@ export default function Navbar({ children, cookies }: NavbarProps) {
 
           <DrawerFooter alignSelf="center" width={"100%"}>
             <VStack spacing="12px" width={"100%"}>
-              <Button fontSize={"sm"} width={"100%"} fontWeight={400}>
+              <Button
+                fontSize={"sm"}
+                width={"100%"}
+                fontWeight={400}
+                as={Link}
+                href="https://cloud.pulsetrail.com"
+                style={{ textDecoration: "none" }}
+              >
                 Sign In
               </Button>
+
               <Button
                 width={"100%"}
                 fontSize={"sm"}
