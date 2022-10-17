@@ -7,12 +7,12 @@
   "scripts": {
     "clean": "rimraf .cache .mf build dist",
     "generate-client": "prisma generate --data-proxy",
-    "build": "npm run generate-client && remix build",
+    "build": "remix build",
     "dev:remix": "remix watch",
     "dev:wrangler": "cross-env NODE_ENV=development wrangler pages dev ./public",
     "dev": "remix build && run-p \"dev:*\"",
     "start": "cross-env NODE_ENV=production npm run dev:wrangler",
-    "postinstall": "remix-esbuild-override && remix setup cloudflare"
+    "postinstall": "remix-esbuild-override && remix setup cloudflare && npm run generate-client"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.11",
