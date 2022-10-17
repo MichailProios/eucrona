@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "cockroachdb"
-  url      = env("DATABASE_URL")
+  url      = "prisma://aws-us-east-1.prisma-data.com/?api_key=duul0SNSKnBmy6VZabYYK263UL-D3AYmk6l6ei4NQtCPX5zfT6YzK5wlA3mqoHsu"
 }
 
 model test {
