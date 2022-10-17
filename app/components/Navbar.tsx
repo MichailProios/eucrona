@@ -119,8 +119,10 @@ export default function Navbar({ children, cookies }: NavbarProps) {
         px={{ base: 6, lg: 12 }}
         bg={useColorModeValue("gray.100", "gray.900")}
         position="fixed"
+        top={0}
         zIndex={800}
-        w={"100%"}
+        width={"100%"}
+        as="header"
       >
         <Flex
           alignItems={"center"}

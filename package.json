@@ -5,7 +5,7 @@
     "seed": "node --require esbuild-register prisma/seed.ts"
   },
   "scripts": {
-    "clean": "rimraf .cache .mf build dist",
+    "clean": "rimraf node_modules .cache .mf build dist functions",
     "generate-client": "prisma generate --data-proxy",
     "build": "remix build",
     "dev:remix": "remix watch",
