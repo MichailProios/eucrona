@@ -8,7 +8,7 @@ async function seed() {
     })
   );
 }
-seed();
+// seed();
 
 function getTest() {
   return [
