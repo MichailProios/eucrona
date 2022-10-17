@@ -9,8 +9,15 @@ export let loader = async () => {
 };
 
 export default function Test() {
-  const { temp } = useLoaderData();
+  const temp = useLoaderData();
 
-  console.log(temp);
-  return <div>test</div>;
+  return (
+    <div>
+      {temp.map((temp1: any) => (
+        <div key={temp1.name}>
+          <h1>{temp1.name}</h1>
+        </div>
+      ))}
+    </div>
+  );
 }
