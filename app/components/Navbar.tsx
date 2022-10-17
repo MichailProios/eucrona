@@ -18,7 +18,7 @@ import {
   DrawerContent,
   useDisclosure,
   DrawerHeader,
-  DrawerCloseButton,
+  Link,
 } from "@chakra-ui/react";
 
 import { NavLink, useLoaderData } from "@remix-run/react";
@@ -159,13 +159,15 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             >
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </IconButton>
-            <Button
-              fontSize={"sm"}
-              fontWeight={400}
-              display={{ base: "none", lg: "flex" }}
-            >
-              Sign In
-            </Button>
+            <Link href="https://cloud.pulsetrail.com">
+              <Button
+                fontSize={"sm"}
+                fontWeight={400}
+                display={{ base: "none", lg: "flex" }}
+              >
+                Sign In
+              </Button>
+            </Link>
             <Button
               fontSize={"sm"}
               fontWeight={600}
