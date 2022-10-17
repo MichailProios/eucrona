@@ -17,7 +17,7 @@ import {
 } from "@remix-run/react";
 import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
-import { ServerStyleContext, ClientStyleContext } from "app/context";
+import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
 
 import Navbar from "app/components/Navbar";
 import NotFound from "app/components/NotFound";

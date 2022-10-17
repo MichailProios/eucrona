@@ -216,7 +216,6 @@ const Index = () => {
                 size="lg"
                 rounded="md"
                 fontWeight="bold"
-                zIndex={1}
                 mb={{ base: 2, sm: 0 }}
               >
                 Get started

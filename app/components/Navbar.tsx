@@ -60,6 +60,7 @@ const NavLinkAppbar = ({
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
     draggable="false"
+    prefetch="render"
     as={NavLink}
     to={href}
   >
@@ -88,6 +89,7 @@ const NavLinkDrawer = ({
     onClick={closeDialog}
     w={"100%"}
     draggable="false"
+    prefetch="render"
     as={NavLink}
     to={href}
   >
@@ -117,6 +119,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
         px={{ base: 6, lg: 12 }}
         bg={useColorModeValue("gray.100", "gray.900")}
         position="fixed"
+        zIndex={800}
         w={"100%"}
       >
         <Flex
@@ -126,7 +129,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           maxW={"1400px"}
         >
           <HStack spacing="40px">
-            <NavLink to={"/"}>
+            <NavLink to={"/"} prefetch="render">
               <Image
                 objectFit="contain"
                 h={55}
@@ -193,7 +196,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
 
         <DrawerContent>
           <DrawerHeader p={2} alignSelf="center">
-            <NavLink to={"/"} onClick={onClose}>
+            <NavLink to={"/"} onClick={onClose} prefetch="render">
               <Image
                 objectFit="contain"
                 h={55}
