@@ -27,8 +27,7 @@ import { NavLink, useLoaderData } from "@remix-run/react";
 
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-import logo from "public/logos/Logo-Sideways-Large-No-Padding.svg";
-import logoDark from "public/logos/Logo-Sideways-Large-No-Padding-DarkMode.svg";
+import logo from "public/logos/Logo-Sideways.svg";
 
 interface NavbarProps {
   children: ReactNode;
@@ -136,8 +135,8 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 objectFit="contain"
                 h={55}
                 w={"auto"}
-                src={colorMode === "light" ? logo : logoDark}
-                alt="PulseTrail-Sideways"
+                src={logo}
+                alt="Eucrona-Logo"
                 draggable="false"
               />
             </NavLink>
@@ -165,7 +164,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
               fontWeight={400}
               display={{ base: "none", lg: "flex" }}
               as={Link}
-              href="https://cloud.pulsetrail.com"
+              href="https://cloud.eucrona.com"
               style={{ textDecoration: "none" }}
             >
               Sign In
@@ -208,8 +207,8 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 objectFit="contain"
                 h={55}
                 w={"auto"}
-                src={colorMode === "light" ? logo : logoDark}
-                alt="PulseTrail-Sideways"
+                src={logo}
+                alt="Eucrona-Logo"
                 draggable="false"
               />
             </NavLink>
@@ -235,7 +234,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 width={"100%"}
                 fontWeight={400}
                 as={Link}
-                href="https://cloud.pulsetrail.com"
+                href="https://cloud.eucrona.com"
                 style={{ textDecoration: "none" }}
               >
                 Sign In
