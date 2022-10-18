@@ -117,7 +117,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
         justifyContent={"center"}
         px={{ base: 6, lg: 12 }}
         bg={useColorModeValue("gray.100", "gray.900")}
-        position="fixed"
+        position="sticky"
         top={0}
         zIndex={800}
         width={"100%"}
