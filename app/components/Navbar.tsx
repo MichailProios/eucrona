@@ -133,7 +133,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             <NavLink to={"/"} prefetch="render">
               <Image
                 objectFit="contain"
-                h={55}
+                h={50}
                 w={"auto"}
                 src={logo}
                 alt="Eucrona-Logo"
@@ -205,7 +205,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             <NavLink to={"/"} onClick={onClose} prefetch="render">
               <Image
                 objectFit="contain"
-                h={55}
+                h={50}
                 w={"auto"}
                 src={logo}
                 alt="Eucrona-Logo"
