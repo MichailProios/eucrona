@@ -87,18 +87,23 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             </NavLink>
             <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
               {Links.map((link, index) => (
-                <Button
+                <NavLink
                   key={index}
-                  onClick={onClose}
-                  variant="ghost"
-                  as={NavLink}
                   to={link.url}
-                  w={"6em"}
                   draggable="false"
                   prefetch="render"
                 >
-                  {link.section}
-                </Button>
+                  {({ isActive }) => (
+                    <Button
+                      onClick={onClose}
+                      variant="ghost"
+                      isActive={isActive}
+                      w={"6em"}
+                    >
+                      {link.section}
+                    </Button>
+                  )}
+                </NavLink>
               ))}
             </HStack>
           </HStack>
@@ -172,17 +177,23 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           <DrawerBody>
             <VStack spacing="16px" align="stretch">
               {Links.map((link, index) => (
-                <Button
+                <NavLink
                   key={index}
-                  onClick={onClose}
-                  variant="ghost"
-                  as={NavLink}
                   to={link.url}
                   draggable="false"
                   prefetch="render"
                 >
-                  {link.section}
-                </Button>
+                  {({ isActive }) => (
+                    <Button
+                      onClick={onClose}
+                      variant="ghost"
+                      isActive={isActive}
+                      w={"100%"}
+                    >
+                      {link.section}
+                    </Button>
+                  )}
+                </NavLink>
               ))}
             </VStack>
           </DrawerBody>
