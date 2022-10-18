@@ -35,66 +35,11 @@ interface NavbarProps {
 }
 
 const Links = [
-  { section: "Home", url: "" },
-  { section: "Features", url: "Features" },
-  { section: "Test", url: "Test" },
-  { section: "No Page", url: "nopage" },
+  { section: "Solutions", url: "Solutions" },
+  { section: "test", url: "Features" },
+  { section: "Resources", url: "Test" },
+  { section: "About", url: "nopage" },
 ];
-
-const NavLinkAppbar = ({
-  children,
-  href,
-}: {
-  children: ReactNode;
-  href: string;
-}) => (
-  <chakra.span
-    p={2}
-    w={"6em"}
-    textAlign="center"
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      color: "brand.main",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    draggable="false"
-    prefetch="render"
-    as={NavLink}
-    to={href}
-  >
-    {children}
-  </chakra.span>
-);
-
-const NavLinkDrawer = ({
-  children,
-  closeDialog,
-  href,
-}: {
-  children: ReactNode;
-  closeDialog: any;
-  href: string;
-}) => (
-  <chakra.span
-    p={2}
-    rounded={"md"}
-    textAlign={"center"}
-    _hover={{
-      textDecoration: "none",
-      color: "brand.main",
-      bg: useColorModeValue("gray.200", "gray.800"),
-    }}
-    onClick={closeDialog}
-    w={"100%"}
-    draggable="false"
-    prefetch="render"
-    as={NavLink}
-    to={href}
-  >
-    {children}
-  </chakra.span>
-);
 
 export const loader = async ({ request }: { request: Request }) => {
   const cookieHeader = request.headers.get("Cookie");
@@ -127,10 +72,10 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           alignItems={"center"}
           justifyContent={"space-between"}
           w={"100%"}
-          maxW={"1400px"}
+          maxW={"1600px"}
         >
-          <HStack spacing="40px">
-            <NavLink to={"/"} prefetch="render">
+          <HStack spacing="10px">
+            <NavLink to={"/"} prefetch="render" draggable={false}>
               <Image
                 objectFit="contain"
                 h={50}
@@ -142,15 +87,25 @@ export default function Navbar({ children, cookies }: NavbarProps) {
             </NavLink>
             <HStack spacing="24px" display={{ base: "none", lg: "flex" }}>
               {Links.map((link, index) => (
-                <NavLinkAppbar key={index} href={link.url}>
+                <Button
+                  key={index}
+                  onClick={onClose}
+                  variant="ghost"
+                  as={NavLink}
+                  to={link.url}
+                  w={"6em"}
+                  draggable="false"
+                  prefetch="render"
+                >
                   {link.section}
-                </NavLinkAppbar>
+                </Button>
               ))}
             </HStack>
           </HStack>
 
           <HStack spacing="12px">
             <IconButton
+              variant={"ghost"}
               aria-label="Color Scheme"
               onClick={() => {
                 toggleColorMode();
@@ -166,6 +121,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
               as={Link}
               href="https://cloud.eucrona.com"
               style={{ textDecoration: "none" }}
+              variant={"solid"}
             >
               Sign In
             </Button>
@@ -216,13 +172,17 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           <DrawerBody>
             <VStack spacing="16px" align="stretch">
               {Links.map((link, index) => (
-                <NavLinkDrawer
+                <Button
                   key={index}
-                  closeDialog={onClose}
-                  href={link.url}
+                  onClick={onClose}
+                  variant="ghost"
+                  as={NavLink}
+                  to={link.url}
+                  draggable="false"
+                  prefetch="render"
                 >
                   {link.section}
-                </NavLinkDrawer>
+                </Button>
               ))}
             </VStack>
           </DrawerBody>
@@ -236,6 +196,7 @@ export default function Navbar({ children, cookies }: NavbarProps) {
                 as={Link}
                 href="https://cloud.eucrona.com"
                 style={{ textDecoration: "none" }}
+                variant={"solid"}
               >
                 Sign In
               </Button>
@@ -253,7 +214,6 @@ export default function Navbar({ children, cookies }: NavbarProps) {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <Box h={16} />
       <Box>{children}</Box>
       {/* <Footer /> */}
     </Box>

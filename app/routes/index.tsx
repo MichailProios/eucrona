@@ -14,6 +14,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
+
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaGithub } from "react-icons/fa";
 import { AiFillCheckCircle } from "react-icons/ai";
 
@@ -135,10 +137,10 @@ const features = [
     ),
   },
 ];
-const Index = () => {
+export default function Index() {
   return (
     <Fragment>
-      <Container maxW="6xl" px={{ base: 6, md: 10 }} py={14}>
+      <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
         <Stack direction={{ base: "column", md: "row" }}>
           <Stack direction="column" spacing={10} justifyContent="center">
             <chakra.h1
@@ -210,32 +212,17 @@ const Index = () => {
               flexWrap="wrap"
             >
               <Button
+                rightIcon={<ArrowForwardIcon />}
                 h={12}
                 px={6}
-                variant="primary"
-                size="lg"
-                rounded="md"
-                fontWeight="bold"
-                mb={{ base: 2, sm: 0 }}
+                colorScheme={"primary"}
               >
                 Get started
               </Button>
-              <Flex
-                border="1px solid"
-                borderColor="gray.700"
-                justify="center"
-                p={3}
-                px={4}
-                lineHeight={1.18}
-                rounded="md"
-                boxShadow="md"
-                fontWeight="bold"
-                alignItems="center"
-                as={Link}
-              >
-                <Icon as={FaGithub} h={4} w={4} />
-                <chakra.span ml={1}> Github</chakra.span>
-              </Flex>
+
+              <Button leftIcon={<FaGithub />} h={12} px={6} variant={"solid"}>
+                Docs
+              </Button>
             </Stack>
           </Stack>
         </Stack>
@@ -259,7 +246,7 @@ const Index = () => {
         </svg>
       </Box>
 
-      <Container maxW="6xl" p={{ base: 4, sm: 10 }}>
+      <Container maxW="1200px" p={{ base: 4, sm: 10 }}>
         <Stack
           direction={{ base: "column", md: "row" }}
           justifyContent="space-between"
@@ -322,6 +309,4 @@ const Index = () => {
       </Container>
     </Fragment>
   );
-};
-
-export default Index;
+}
