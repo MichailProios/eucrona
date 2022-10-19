@@ -7,6 +7,7 @@ import {
   IconButton,
   LinkProps,
   Button,
+  Show,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 
@@ -30,7 +31,7 @@ function Footer({ navigationLinks, eucronaAccounts }: FooterProps) {
       maxW="1200px"
       marginInline="auto"
       p={8}
-      spacing={{ base: 4, md: 0 }}
+      spacing={{ base: 3, md: 0 }}
       justifyContent="space-between"
       alignItems="center"
       direction={{ base: "column", md: "row" }}
@@ -46,27 +47,31 @@ function Footer({ navigationLinks, eucronaAccounts }: FooterProps) {
         />
       </NavLink>
 
-      {/* Desktop Screen */}
-      <Stack
-        spacing={{ base: 2, sm: 4 }}
-        alignItems="center"
-        direction={{ base: "column", sm: "row" }}
-      >
-        {navigationLinks.map((link, index) => (
-          <NavLink key={index} to={link.url} draggable="false">
-            <Button variant={"link"} fontSize="sm">
-              {link.label}
-            </Button>
-          </NavLink>
-        ))}
-      </Stack>
+      <Show breakpoint="(min-width: 370px)">
+        <Stack spacing={4} alignItems="center" direction={"row"}>
+          {navigationLinks.map((link, index) => (
+            <NavLink key={index} to={link.url} draggable="false">
+              <Button variant={"link"} fontSize="sm">
+                {link.label}
+              </Button>
+            </NavLink>
+          ))}
+        </Stack>
+      </Show>
 
-      <Stack
-        direction="row"
-        spacing={5}
-        pt={{ base: 4, md: 0 }}
-        alignItems="center"
-      >
+      <Show breakpoint="(max-width: 369px)">
+        <Stack spacing={2} alignItems="center" direction={"column"}>
+          {navigationLinks.map((link, index) => (
+            <NavLink key={index} to={link.url} draggable="false">
+              <Button variant={"link"} fontSize="sm">
+                {link.label}
+              </Button>
+            </NavLink>
+          ))}
+        </Stack>
+      </Show>
+
+      <Stack direction="row" spacing={2} alignItems="center">
         {eucronaAccounts.map((value, index) => (
           <IconButton
             key={index}

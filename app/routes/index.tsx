@@ -205,21 +205,22 @@ export default function Index() {
                 </Stack>
               ))}
             </Stack>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              spacing={2}
-              // flexWrap="wrap"
-            >
+            <Stack direction={{ base: "column", sm: "row" }} spacing={2}>
               <Button
                 rightIcon={<ArrowForwardIcon />}
                 h={12}
-                px={6}
+                fontSize="lg"
                 colorScheme={"primary"}
               >
                 Get started
               </Button>
 
-              <Button leftIcon={<FaGithub />} h={12} px={6} variant={"solid"}>
+              <Button
+                leftIcon={<FaGithub />}
+                h={12}
+                fontSize="lg"
+                variant={"solid"}
+              >
                 Docs
               </Button>
             </Stack>

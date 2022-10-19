@@ -122,7 +122,7 @@ function NavbarHeader({
       >
         <HStack spacing="40px">
           <NavLink to={"/"} prefetch="render" draggable={false}>
-            <Show above="sm">
+            <Show breakpoint="(min-width: 370px)">
               <Image
                 objectFit="contain"
                 h={50}
@@ -132,7 +132,7 @@ function NavbarHeader({
                 draggable="false"
               />
             </Show>
-            <Show below="sm">
+            <Show breakpoint="(max-width: 369px)">
               <Image
                 objectFit="contain"
                 h={50}

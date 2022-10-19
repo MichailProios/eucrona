@@ -9,6 +9,8 @@ import Footer from "app/components/Footer";
 
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
+import useWindowDimensions from "app/utils/hooks/useWindowDimensions";
+
 interface LayoutProps {
   children: ReactNode;
   cookies: string;
@@ -43,13 +45,15 @@ const eucronaAccounts = [
 ];
 
 export default function Layout({ children, cookies }: LayoutProps) {
+  const { height } = useWindowDimensions();
+
   cookies = useLoaderData();
 
   return (
     <Box
       display={"flex"}
       width={"100%"}
-      minHeight={"100vh"}
+      minHeight={height}
       flexDirection={"column"}
       justifyContent="flex-start"
     >
