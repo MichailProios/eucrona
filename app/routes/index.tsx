@@ -6,7 +6,6 @@ import {
   Text,
   useColorModeValue,
   Button,
-  Link,
   Icon,
   HStack,
   SimpleGrid,
@@ -208,8 +207,8 @@ export default function Index() {
             </Stack>
             <Stack
               direction={{ base: "column", sm: "row" }}
-              spacing={{ base: 0, sm: 2 }}
-              flexWrap="wrap"
+              spacing={2}
+              // flexWrap="wrap"
             >
               <Button
                 rightIcon={<ArrowForwardIcon />}

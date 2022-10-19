@@ -19,7 +19,7 @@ import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
 import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
 
-import Navbar from "app/components/Navbar";
+import Layout from "app/components/Layout";
 import NotFound from "app/components/NotFound";
 
 export const meta: MetaFunction = () => ({
@@ -137,9 +137,9 @@ export default function App() {
             : localStorageManager
         }
       >
-        <Navbar cookies={cookies}>
+        <Layout cookies={cookies}>
           <Outlet />
-        </Navbar>
+        </Layout>
       </ChakraProvider>
     </Document>
   );
@@ -158,9 +158,9 @@ export function ErrorBoundary({ error }: { error: Error }) {
             : localStorageManager
         }
       >
-        <Navbar cookies={cookies}>
+        <Layout cookies={cookies}>
           <NotFound />
-        </Navbar>
+        </Layout>
       </ChakraProvider>
     </Document>
   );
@@ -179,9 +179,9 @@ export function CatchBoundary() {
             : localStorageManager
         }
       >
-        <Navbar cookies={cookies}>
+        <Layout cookies={cookies}>
           <NotFound />
-        </Navbar>
+        </Layout>
       </ChakraProvider>
     </Document>
   );
