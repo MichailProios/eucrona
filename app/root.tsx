@@ -7,6 +7,8 @@ import {
   localStorageManager,
 } from "@chakra-ui/react";
 
+import { useMatches } from "@remix-run/react";
+
 import {
   Links,
   LiveReload,
@@ -125,19 +127,10 @@ const Document = withEmotionCache(
 );
 
 export default function App() {
-  let cookies = "";
-
   return (
     <Document>
-      <ChakraProvider
-        theme={theme}
-        colorModeManager={
-          cookies.length > 0
-            ? cookieStorageManagerSSR(cookies)
-            : localStorageManager
-        }
-      >
-        <Layout cookies={cookies}>
+      <ChakraProvider theme={theme}>
+        <Layout>
           <Outlet />
         </Layout>
       </ChakraProvider>
@@ -146,19 +139,10 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  let cookies = "";
-
   return (
     <Document>
-      <ChakraProvider
-        theme={theme}
-        colorModeManager={
-          cookies.length > 0
-            ? cookieStorageManagerSSR(cookies)
-            : localStorageManager
-        }
-      >
-        <Layout cookies={cookies}>
+      <ChakraProvider theme={theme}>
+        <Layout>
           <NotFound />
         </Layout>
       </ChakraProvider>
@@ -167,19 +151,10 @@ export function ErrorBoundary({ error }: { error: Error }) {
 }
 
 export function CatchBoundary() {
-  let cookies = "";
-
   return (
     <Document>
-      <ChakraProvider
-        theme={theme}
-        colorModeManager={
-          cookies.length > 0
-            ? cookieStorageManagerSSR(cookies)
-            : localStorageManager
-        }
-      >
-        <Layout cookies={cookies}>
+      <ChakraProvider theme={theme}>
+        <Layout>
           <NotFound />
         </Layout>
       </ChakraProvider>

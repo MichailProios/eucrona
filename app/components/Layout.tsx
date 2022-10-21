@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { Box, Divider } from "@chakra-ui/react";
 
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useMatches } from "@remix-run/react";
 
 import Navbar from "app/components/Navbar";
 import Footer from "app/components/Footer";
@@ -13,20 +13,13 @@ import useWindowDimensions from "app/utils/hooks/useWindowDimensions";
 
 interface LayoutProps {
   children: ReactNode;
-  cookies: string;
 }
-
-export const loader = async ({ request }: { request: Request }) => {
-  const cookieHeader = request.headers.get("Cookie");
-
-  return cookieHeader;
-};
 
 const navigationLinks = [
   { label: "Solutions", url: "Solutions" },
   { label: "Products", url: "Features" },
   { label: "Resources", url: "Test" },
-  { label: "About", url: "nopage" },
+  { label: "About", url: "Test" },
 ];
 
 const eucronaAccounts = [
@@ -44,10 +37,16 @@ const eucronaAccounts = [
   },
 ];
 
-export default function Layout({ children, cookies }: LayoutProps) {
-  const { height } = useWindowDimensions();
+// export const loader = async ({ request }: { request: Request }) => {
+//   const cookieHeader = request.headers.get("Cookie");
 
-  cookies = useLoaderData();
+//   return cookieHeader;
+// };
+
+// useLoaderData();
+
+export default function Layout({ children }: LayoutProps) {
+  const { height } = useWindowDimensions();
 
   return (
     <Box
