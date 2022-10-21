@@ -22,7 +22,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 
-import { NavLink, useLoaderData } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 
 // import Footer from "app/components/Footer";
 
@@ -113,6 +113,7 @@ function NavbarHeader({
       zIndex={800}
       width={"100%"}
       as="header"
+      boxShadow={"md"}
     >
       <Flex
         alignItems={"center"}

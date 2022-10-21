@@ -7,7 +7,7 @@ import {
   localStorageManager,
 } from "@chakra-ui/react";
 
-import { useMatches } from "@remix-run/react";
+import { useCatch } from "@remix-run/react";
 
 import {
   Links,
@@ -22,7 +22,8 @@ import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
 
 import Layout from "app/components/Layout";
-import NotFound from "app/components/NotFound";
+import Catch from "~/components/Catch";
+import useWindowDimensions from "./utils/hooks/useWindowDimensions";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -104,7 +105,14 @@ const Document = withEmotionCache(
 
     return (
       <html lang="en">
-        <head>
+        <head
+          style={{
+            height: "100%",
+            width: "100%",
+            position: "fixed",
+            overflow: "hidden",
+          }}
+        >
           <Meta />
           <Links />
           {serverStyleData?.map(({ key, ids, css }) => (
@@ -115,7 +123,7 @@ const Document = withEmotionCache(
             />
           ))}
         </head>
-        <body style={{ overflow: "overlay" }}>
+        <body style={{ height: "100%", overflow: "overlay" }}>
           {children}
           <ScrollRestoration />
           <Scripts />
@@ -126,6 +134,7 @@ const Document = withEmotionCache(
   }
 );
 
+//
 export default function App() {
   return (
     <Document>
@@ -138,24 +147,26 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
-  return (
-    <Document>
-      <ChakraProvider theme={theme}>
-        <Layout>
-          <NotFound />
-        </Layout>
-      </ChakraProvider>
-    </Document>
-  );
-}
+// export function ErrorBoundary({ error }: { error: Error }) {
+//   return (
+//     <Document>
+//       <ChakraProvider theme={theme}>
+//         <Layout>
+//           <Catch caught={error} />
+//         </Layout>
+//       </ChakraProvider>
+//     </Document>
+//   );
+// }
 
 export function CatchBoundary() {
+  const caught = useCatch();
+
   return (
     <Document>
       <ChakraProvider theme={theme}>
         <Layout>
-          <NotFound />
+          <Catch caught={caught} />
         </Layout>
       </ChakraProvider>
     </Document>

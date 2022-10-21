@@ -19,7 +19,7 @@ const navigationLinks = [
   { label: "Solutions", url: "Solutions" },
   { label: "Products", url: "Features" },
   { label: "Resources", url: "Test" },
-  { label: "About", url: "Test" },
+  { label: "About", url: "tmep" },
 ];
 
 const eucronaAccounts = [
