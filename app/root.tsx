@@ -104,15 +104,16 @@ const Document = withEmotionCache(
     }, []);
 
     return (
-      <html lang="en">
-        <head
-          style={{
-            height: "100%",
-            width: "100%",
-            position: "fixed",
-            overflow: "hidden",
-          }}
-        >
+      <html
+        lang="en"
+        style={{
+          height: "100%",
+          width: "100%",
+          position: "fixed",
+          overflow: "hidden",
+        }}
+      >
+        <head>
           <Meta />
           <Links />
           {serverStyleData?.map(({ key, ids, css }) => (
