@@ -37,14 +37,6 @@ const eucronaAccounts = [
   },
 ];
 
-// export const loader = async ({ request }: { request: Request }) => {
-//   const cookieHeader = request.headers.get("Cookie");
-
-//   return cookieHeader;
-// };
-
-// useLoaderData();
-
 export default function Layout({ children }: LayoutProps) {
   const { height } = useWindowDimensions();
 
