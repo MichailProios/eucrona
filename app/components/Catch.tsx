@@ -10,15 +10,11 @@ interface CatchProps {
 export default function Catch({ caught }: CatchProps) {
   return (
     <Container mt="5em">
-      <VStack spacing={5}>
-        <VStack>
-          <Heading bgGradient="linear(to-br, #228be6, #15aabf)" bgClip="text">
-            {caught.status}
-          </Heading>
-          <Text fontSize="18px" display="block" maxW={"20em"}>
-            {caught.statusText}
-          </Text>
-        </VStack>
+      <VStack>
+        <Heading bgGradient="linear(to-br, #228be6, #15aabf)" bgClip="text">
+          {caught.status}
+        </Heading>
+        <Text fontSize="18px">{caught.statusText}</Text>
 
         <Button
           rightIcon={<ArrowForwardIcon />}
@@ -27,6 +23,7 @@ export default function Catch({ caught }: CatchProps) {
           size="lg"
           as={NavLink}
           to="/"
+          draggable={false}
         >
           Go to Home
         </Button>

@@ -1,11 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import {
-  extendTheme,
-  ChakraProvider,
-  cookieStorageManagerSSR,
-  localStorageManager,
-} from "@chakra-ui/react";
+import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 
 import { useCatch } from "@remix-run/react";
 
@@ -23,7 +18,6 @@ import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
 
 import Layout from "app/components/Layout";
 import Catch from "~/components/Catch";
-import useWindowDimensions from "./utils/hooks/useWindowDimensions";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",

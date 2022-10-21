@@ -2,7 +2,7 @@ import { ReactNode, useState, useRef, forwardRef } from "react";
 
 import {
   Show,
-  Box,
+  Spinner,
   Flex,
   Image,
   HStack,
@@ -128,6 +128,7 @@ function NavbarHeader({
                 objectFit="contain"
                 h={50}
                 w={"auto"}
+                minWidth="156px"
                 src={LogoSideways}
                 alt="Eucrona-Logo"
                 draggable="false"

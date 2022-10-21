@@ -30,7 +30,7 @@ function Footer({ navigationLinks, eucronaAccounts }: FooterProps) {
     <Stack
       maxW="1200px"
       marginInline="auto"
-      p={8}
+      p={2}
       spacing={{ base: 3, md: 0 }}
       justifyContent="space-between"
       alignItems="center"
