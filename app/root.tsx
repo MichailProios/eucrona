@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import { extendTheme, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import { useCatch } from "@remix-run/react";
 
@@ -19,6 +19,8 @@ import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
 import Layout from "app/components/Layout";
 import Catch from "~/components/Catch";
 
+import theme from "app/styles/theme";
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Eucrona",
@@ -34,49 +36,6 @@ export let links: LinksFunction = () => {
     },
   ];
 };
-
-const colors = {
-  primary: {
-    "50": "#f0f9fe",
-    "100": "#c3e5fb",
-    "200": "#8dcdf7",
-    "300": "#45aef2",
-    "400": "#349cde",
-    "500": "#2c83bb",
-    "600": "#256f9e",
-    "700": "#1e597f",
-    "800": "#194b6b",
-    "900": "#12364d",
-  },
-};
-
-const config = {
-  useSystemColorMode: true,
-};
-
-const components = {
-  Button: {
-    variants: {
-      primary: {
-        bgGradient: "linear(to-br, #39a9f1, #00438b)",
-        color: "white",
-
-        _hover: {
-          bgGradient: "linear(to-br, #2c9ce4, #00367e)",
-        },
-        _active: {
-          bgGradient: "linear(to-br, #2090d8, #002971)",
-        },
-
-        _disabled: {
-          bgGradient: "linear(to-br, #39a9f1, #00438b)",
-        },
-      },
-    },
-  },
-};
-
-const theme = extendTheme({ config, colors, components });
 
 interface DocumentProps {
   children: React.ReactNode;
