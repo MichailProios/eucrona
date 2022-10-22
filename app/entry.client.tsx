@@ -1,7 +1,7 @@
 // entry.client.tsx
 import React, { useState } from "react";
-// import { hydrate } from "react-dom";
-import { hydrateRoot } from "react-dom/client";
+import { hydrate } from "react-dom";
+// import { hydrateRoot } from "react-dom/client";
 import { CacheProvider } from "@emotion/react";
 import { RemixBrowser } from "@remix-run/react";
 
@@ -26,16 +26,16 @@ function ClientCacheProvider({ children }: ClientCacheProviderProps) {
   );
 }
 
-// hydrate(
-//   <ClientCacheProvider>
-//     <RemixBrowser />
-//   </ClientCacheProvider>,
-//   document
-// );
-
-hydrateRoot(
-  document,
+hydrate(
   <ClientCacheProvider>
     <RemixBrowser />
-  </ClientCacheProvider>
+  </ClientCacheProvider>,
+  document
 );
+
+// hydrateRoot(
+//   document,
+//   <ClientCacheProvider>
+//     <RemixBrowser />
+//   </ClientCacheProvider>
+// );

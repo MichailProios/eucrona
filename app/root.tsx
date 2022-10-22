@@ -32,7 +32,7 @@ export let links: LinksFunction = () => {
     {
       rel: "icon",
       type: "image/png",
-      href: "/favicon/favicon.ico",
+      href: "/favicon.ico",
     },
   ];
 };

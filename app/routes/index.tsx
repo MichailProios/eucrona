@@ -232,7 +232,7 @@ export default function Index() {
           fill={useColorModeValue("#f7fafc", "#171923")}
           width="150%"
           height="56px"
-          transform="scaleX(-1)"
+          // transform="scaleX(-1)"
           filter="drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.05))"
           preserveAspectRatio="none"
           viewBox="0 0 1200 120"
