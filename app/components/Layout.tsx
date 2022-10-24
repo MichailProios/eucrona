@@ -45,12 +45,7 @@ export default function Layout({ children }: LayoutProps) {
   const { height } = useWindowDimensions();
 
   useEffect(() => {
-    if (
-      ExecutionEnvironment.canUseDOM &&
-      ExecutionEnvironment.canUseEventListeners &&
-      ExecutionEnvironment.canUseViewport &&
-      ExecutionEnvironment.canUseWorkers
-    ) {
+    if (ExecutionEnvironment.canUseDOM) {
       setFlag(true);
     }
   }, [setFlag]);
