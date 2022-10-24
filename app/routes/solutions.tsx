@@ -272,7 +272,6 @@ const Solutions = () => {
               rounded="lg"
               boxShadow="2xl"
               p={6}
-              rounded="lg"
               textAlign="center"
               pos="relative"
             >

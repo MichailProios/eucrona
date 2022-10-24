@@ -17,7 +17,7 @@ import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
 
 import Layout from "app/components/Layout";
-import Catch from "~/components/Catch";
+import Catch from "app/components/Catch";
 
 import theme from "app/styles/theme";
 
@@ -57,15 +57,7 @@ const Document = withEmotionCache(
     }, []);
 
     return (
-      <html
-        lang="en"
-        style={{
-          height: "100%",
-          width: "100%",
-          position: "fixed",
-          overflow: "hidden",
-        }}
-      >
+      <html lang="en">
         <head>
           <Meta />
           <Links />
