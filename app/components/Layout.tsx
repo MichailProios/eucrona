@@ -1,8 +1,14 @@
 import { Fragment, ReactNode, useEffect, useState } from "react";
 
-import { Center, Divider, Spinner, Box } from "@chakra-ui/react";
+import {
+  Fade,
+  Divider,
+  IconButton,
+  Box,
+  useDisclosure,
+} from "@chakra-ui/react";
 
-import { useLoaderData, useMatches } from "@remix-run/react";
+import { animateScroll as scroll } from "react-scroll";
 
 import ExecutionEnvironment from "exenv";
 
@@ -12,6 +18,8 @@ import Footer from "app/components/Footer";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 import useWindowDimensions from "app/utils/hooks/useWindowDimensions";
+import useScrollButtonVisibility from "~/utils/hooks/useScrollButtonVisibility";
+import { ChevronUpIcon } from "@chakra-ui/icons";
 
 interface LayoutProps {
   children: ReactNode;
@@ -41,14 +49,25 @@ const eucronaAccounts = [
 
 export default function Layout({ children }: LayoutProps) {
   const [flag, setFlag] = useState(false);
-
   const { height } = useWindowDimensions();
+
+  const showButton = useScrollButtonVisibility();
 
   useEffect(() => {
     if (ExecutionEnvironment.canUseDOM) {
       setFlag(true);
     }
   }, [setFlag]);
+
+  const handleScrollToTop = () => {
+    if (ExecutionEnvironment.canUseDOM) {
+      scroll.scrollToTop({
+        duration: 400,
+        delay: 0,
+        smooth: "easeInOutQuart",
+      });
+    }
+  };
 
   if (flag) {
     return (
@@ -63,7 +82,24 @@ export default function Layout({ children }: LayoutProps) {
           navigationLinks={navigationLinks}
           eucronaAccounts={eucronaAccounts}
         />
-        <Box>{children}</Box>{" "}
+
+        <Fade in={showButton} unmountOnExit>
+          <IconButton
+            onClick={handleScrollToTop}
+            aria-label="top"
+            zIndex={1000}
+            shadow="lg"
+            size="md"
+            rounded={"full"}
+            position="fixed"
+            bottom={6}
+            right={12}
+            colorScheme={"primary"}
+          >
+            <ChevronUpIcon fontSize="1.5em" />
+          </IconButton>
+        </Fade>
+        <Box>{children}</Box>
         <Box marginTop={"auto"}>
           <Divider />
           <Footer
