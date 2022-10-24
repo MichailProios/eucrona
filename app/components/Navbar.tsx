@@ -1,4 +1,4 @@
-import { ReactNode, useState, useRef, forwardRef } from "react";
+import { ReactNode, useEffect, useRef, forwardRef } from "react";
 
 import {
   Show,
@@ -20,6 +20,7 @@ import {
   DrawerHeader,
   Link,
   DrawerCloseButton,
+  useBreakpoint,
 } from "@chakra-ui/react";
 
 import { NavLink } from "@remix-run/react";
@@ -48,6 +49,14 @@ export default function Navbar({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const breakpoint = useBreakpoint({ ssr: true });
+
+  useEffect(() => {
+    if (breakpoint === "lg") {
+      onClose();
+    }
+  }, [breakpoint, onClose]);
 
   return (
     <>
@@ -154,12 +163,7 @@ function NavbarHeader({
                 prefetch="render"
               >
                 {({ isActive }) => (
-                  <Button
-                    onClick={onClose}
-                    variant="ghost"
-                    isActive={isActive}
-                    w={"6em"}
-                  >
+                  <Button onClick={onClose} variant="ghost" isActive={isActive}>
                     {link.label}
                   </Button>
                 )}
@@ -281,7 +285,7 @@ function NavbarDrawer({
           </NavLink>
         </DrawerHeader>
         <DrawerBody>
-          <VStack spacing="16px" align="stretch">
+          <VStack spacing="12px" align="stretch">
             {navigationLinks.map((link, index) => (
               <NavLink
                 key={index}

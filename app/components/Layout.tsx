@@ -1,8 +1,10 @@
-import type { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
-import { Box, Divider } from "@chakra-ui/react";
+import { Center, Divider, Spinner, Box } from "@chakra-ui/react";
 
 import { useLoaderData, useMatches } from "@remix-run/react";
+
+import ExecutionEnvironment from "exenv";
 
 import Navbar from "app/components/Navbar";
 import Footer from "app/components/Footer";
@@ -17,9 +19,9 @@ interface LayoutProps {
 
 const navigationLinks = [
   { label: "Solutions", url: "Solutions" },
-  { label: "Products", url: "Features" },
+  { label: "Infrastructure", url: "Infrastructure" },
   { label: "Resources", url: "Test" },
-  { label: "About", url: "tmep" },
+  { label: "About", url: "Test" },
 ];
 
 const eucronaAccounts = [
@@ -38,30 +40,51 @@ const eucronaAccounts = [
 ];
 
 export default function Layout({ children }: LayoutProps) {
+  const [flag, setFlag] = useState(false);
+
   const { height } = useWindowDimensions();
 
-  return (
-    <Box
-      display={"flex"}
-      width={"100%"}
-      minHeight={height}
-      flexDirection={"column"}
-      justifyContent="flex-start"
-    >
-      <Navbar
-        navigationLinks={navigationLinks}
-        eucronaAccounts={eucronaAccounts}
-      />
+  useEffect(() => {
+    if (
+      ExecutionEnvironment.canUseDOM &&
+      ExecutionEnvironment.canUseEventListeners &&
+      ExecutionEnvironment.canUseViewport &&
+      ExecutionEnvironment.canUseWorkers
+    ) {
+      setFlag(true);
+    }
+  }, [setFlag]);
 
-      <Box>{children}</Box>
-
-      <Box marginTop={"auto"}>
-        <Divider />
-        <Footer
+  if (flag)
+    return (
+      <Box
+        display={"flex"}
+        width={"100%"}
+        minHeight={height}
+        flexDirection={"column"}
+        justifyContent="flex-start"
+      >
+        <Navbar
           navigationLinks={navigationLinks}
           eucronaAccounts={eucronaAccounts}
         />
+
+        <Box>{children}</Box>
+
+        <Box marginTop={"auto"}>
+          <Divider />
+          <Footer
+            navigationLinks={navigationLinks}
+            eucronaAccounts={eucronaAccounts}
+          />
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  else {
+    return (
+      <Center height={"60vh"}>
+        <Spinner size="xl" />
+      </Center>
+    );
+  }
 }
