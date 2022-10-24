@@ -45,37 +45,38 @@ export default function Layout({ children }: LayoutProps) {
   const { height } = useWindowDimensions();
 
   useEffect(() => {
-    if (ExecutionEnvironment.canUseDOM) {
+    if (
+      ExecutionEnvironment.canUseDOM &&
+      ExecutionEnvironment.canUseEventListeners &&
+      ExecutionEnvironment.canUseViewport &&
+      ExecutionEnvironment.canUseWorkers
+    ) {
       setFlag(true);
     }
   }, [setFlag]);
 
-  // if (flag)
-  return (
-    <Box
-      display={"flex"}
-      width={"100%"}
-      minHeight={height}
-      flexDirection={"column"}
-      justifyContent="flex-start"
-    >
-      <Navbar
-        navigationLinks={navigationLinks}
-        eucronaAccounts={eucronaAccounts}
-      />
-
-      {flag && (
-        <Fragment>
-          <Box>{children}</Box>{" "}
-          <Box marginTop={"auto"}>
-            <Divider />
-            <Footer
-              navigationLinks={navigationLinks}
-              eucronaAccounts={eucronaAccounts}
-            />
-          </Box>
-        </Fragment>
-      )}
-    </Box>
-  );
+  if (flag) {
+    return (
+      <Box
+        display={"flex"}
+        width={"100%"}
+        minHeight={height}
+        flexDirection={"column"}
+        justifyContent="flex-start"
+      >
+        <Navbar
+          navigationLinks={navigationLinks}
+          eucronaAccounts={eucronaAccounts}
+        />
+        <Box>{children}</Box>{" "}
+        <Box marginTop={"auto"}>
+          <Divider />
+          <Footer
+            navigationLinks={navigationLinks}
+            eucronaAccounts={eucronaAccounts}
+          />
+        </Box>
+      </Box>
+    );
+  }
 }
