@@ -21,6 +21,7 @@ import {
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaGithub } from "react-icons/fa";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { Link } from "@remix-run/react";
 
 interface StatData {
   label: string;
@@ -308,17 +309,19 @@ export default function Index() {
             <Stack direction={{ base: "column", sm: "row" }} spacing={2}>
               <Button
                 rightIcon={<ArrowForwardIcon />}
-                h={12}
-                fontSize="lg"
+                size="lg"
                 colorScheme={"primary"}
+                as={Link}
+                to="/Solutions"
+                draggable={false}
               >
                 Get started
               </Button>
 
               <Button
                 leftIcon={<FaGithub />}
-                h={12}
-                fontSize="lg"
+                size="lg"
+                rounded="md"
                 variant={"solid"}
               >
                 Docs
@@ -445,6 +448,8 @@ export default function Index() {
               <Input
                 type={"text"}
                 placeholder={"Email Address"}
+                size="lg"
+                rounded="md"
                 // color={useColorModeValue("gray.800", "gray.200")}
                 // bg={useColorModeValue("gray.100", "gray.600")}
                 // rounded={"full"}
@@ -455,6 +460,9 @@ export default function Index() {
               <Button
                 colorScheme="primary"
                 w="100%"
+                size="lg"
+                rounded="md"
+
                 // rounded={"full"}
                 // color={"white"}
                 // flex={"1 0 auto"}
