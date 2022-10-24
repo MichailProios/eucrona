@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { Fragment, ReactNode, useEffect, useState } from "react";
 
 import { Center, Divider, Spinner, Box } from "@chakra-ui/react";
 
@@ -45,46 +45,37 @@ export default function Layout({ children }: LayoutProps) {
   const { height } = useWindowDimensions();
 
   useEffect(() => {
-    if (
-      ExecutionEnvironment.canUseDOM &&
-      ExecutionEnvironment.canUseEventListeners &&
-      ExecutionEnvironment.canUseViewport &&
-      ExecutionEnvironment.canUseWorkers
-    ) {
+    if (ExecutionEnvironment.canUseDOM) {
       setFlag(true);
     }
   }, [setFlag]);
 
-  if (flag)
-    return (
-      <Box
-        display={"flex"}
-        width={"100%"}
-        minHeight={height}
-        flexDirection={"column"}
-        justifyContent="flex-start"
-      >
-        <Navbar
-          navigationLinks={navigationLinks}
-          eucronaAccounts={eucronaAccounts}
-        />
+  // if (flag)
+  return (
+    <Box
+      display={"flex"}
+      width={"100%"}
+      minHeight={height}
+      flexDirection={"column"}
+      justifyContent="flex-start"
+    >
+      <Navbar
+        navigationLinks={navigationLinks}
+        eucronaAccounts={eucronaAccounts}
+      />
 
-        <Box>{children}</Box>
-
-        <Box marginTop={"auto"}>
-          <Divider />
-          <Footer
-            navigationLinks={navigationLinks}
-            eucronaAccounts={eucronaAccounts}
-          />
-        </Box>
-      </Box>
-    );
-  else {
-    return (
-      <Center height={"60vh"}>
-        <Spinner size="xl" />
-      </Center>
-    );
-  }
+      {flag && (
+        <Fragment>
+          <Box>{children}</Box>{" "}
+          <Box marginTop={"auto"}>
+            <Divider />
+            <Footer
+              navigationLinks={navigationLinks}
+              eucronaAccounts={eucronaAccounts}
+            />
+          </Box>
+        </Fragment>
+      )}
+    </Box>
+  );
 }

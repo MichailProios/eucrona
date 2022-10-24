@@ -12,6 +12,7 @@ import {
   Link,
   Stack,
   Button,
+  Show,
 } from "@chakra-ui/react";
 
 import { FaGithub } from "react-icons/fa";
@@ -77,14 +78,8 @@ const milestones = [
 ];
 
 const Milestones = () => {
-  const isMobile = useBreakpointValue(
-    { base: true, md: false },
-    { ssr: false }
-  );
-  const isDesktop = useBreakpointValue(
-    { base: false, md: true },
-    { ssr: false }
-  );
+  // const isMobile = useBreakpointValue({ base: true, md: false });
+  // const isDesktop = useBreakpointValue({ base: false, md: true });
 
   return (
     <Fragment>
@@ -95,32 +90,29 @@ const Milestones = () => {
 
         {milestones.map((milestone) => (
           <Flex key={milestone.id} mb="10px">
-            {/* Desktop view(left card) */}
-            {isDesktop && milestone.id % 2 === 0 && (
-              <>
-                <EmptyCard />
-                <LineWithDot />
-                <Card {...milestone} />
-              </>
-            )}
+            <Show above="md" ssr={false}>
+              {milestone.id % 2 === 0 && (
+                <>
+                  <EmptyCard />
+                  <LineWithDot />
+                  <Card {...milestone} />
+                </>
+              )}
+
+              {milestone.id % 2 !== 0 && (
+                <>
+                  <Card {...milestone} />
+                  <LineWithDot />
+                  <EmptyCard />
+                </>
+              )}
+            </Show>
 
             {/* Mobile view */}
-            {isMobile && (
-              <>
-                <LineWithDot />
-                <Card {...milestone} />
-              </>
-            )}
-
-            {/* Desktop view(right card) */}
-            {isDesktop && milestone.id % 2 !== 0 && (
-              <>
-                <Card {...milestone} />
-
-                <LineWithDot />
-                <EmptyCard />
-              </>
-            )}
+            <Show below="md" ssr={false}>
+              <LineWithDot />
+              <Card {...milestone} />
+            </Show>
           </Flex>
         ))}
       </Container>
