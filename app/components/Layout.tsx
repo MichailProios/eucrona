@@ -31,7 +31,7 @@ const navigationLinks = [
   { label: "Solutions", url: "Solutions" },
   { label: "Infrastructure", url: "Infrastructure" },
   { label: "Resources", url: "Resources" },
-  { label: "About", url: "About" },
+  { label: "Contacts", url: "Contacts" },
 ];
 
 const eucronaAccounts = [
