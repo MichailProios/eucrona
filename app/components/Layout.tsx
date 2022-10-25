@@ -30,8 +30,8 @@ interface LayoutProps {
 const navigationLinks = [
   { label: "Solutions", url: "Solutions" },
   { label: "Infrastructure", url: "Infrastructure" },
-  { label: "Resources", url: "Test" },
-  { label: "About", url: "Test" },
+  { label: "Resources", url: "Resources" },
+  { label: "About", url: "About" },
 ];
 
 const eucronaAccounts = [
