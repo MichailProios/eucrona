@@ -433,10 +433,10 @@ export default function Index() {
               fontSize={"3xl"}
               color={useColorModeValue("gray.800", "gray.200")}
             >
-              Keep In Touch
+              Subscribe
             </Heading>
             <Text fontSize={"lg"} color={"gray.500"}>
-              Subscribe to our newsletter & stay up to date!
+              And stay up to date with Eucrona!
             </Text>
           </Stack>
           <Stack
@@ -445,30 +445,10 @@ export default function Index() {
             w={"full"}
           >
             <FormControl>
-              <Input
-                type={"text"}
-                placeholder={"Email Address"}
-                size="lg"
-                rounded="md"
-                // color={useColorModeValue("gray.800", "gray.200")}
-                // bg={useColorModeValue("gray.100", "gray.600")}
-                // rounded={"full"}
-                // border={0}
-              />
+              <Input type={"text"} placeholder={"Email Address"} />
             </FormControl>
             <FormControl w={{ base: "100%", md: "40%" }}>
-              <Button
-                colorScheme="primary"
-                w="100%"
-                size="lg"
-                rounded="md"
-
-                // rounded={"full"}
-                // color={"white"}
-                // flex={"1 0 auto"}
-                // _hover={{ bg: "blue.500" }}
-                // _focus={{ bg: "blue.500" }}
-              >
+              <Button colorScheme="primary" w="100%" variant={"solid"}>
                 Submit
               </Button>
             </FormControl>

@@ -12,12 +12,16 @@ import {
   Link,
   Stack,
   Button,
+  Skeleton,
   Show,
+  Image,
 } from "@chakra-ui/react";
 
-import { FaGithub } from "react-icons/fa";
-import { AiOutlineTwitter } from "react-icons/ai";
-import { BsDiscord } from "react-icons/bs";
+import type { TextProps } from "@chakra-ui/react";
+
+import type { PropsWithChildren } from "react";
+
+import temp2 from "public/temp2.webp";
 
 const milestones = [
   {
@@ -87,7 +91,55 @@ const Milestones = () => {
         <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
           Infrastructure
         </chakra.h3>
-
+        <Stack
+          direction={{ base: "column", md: "row" }}
+          justifyContent="center"
+        >
+          <Box mr={{ base: 0, md: 5 }} pos="relative">
+            <DottedBox />
+            <Image
+              boxShadow="lg"
+              w="100%"
+              h="100%"
+              minW={{ base: "auto", md: "30rem" }}
+              maxH="20rem"
+              objectFit="cover"
+              src={temp2}
+              rounded="md"
+              fallback={<Skeleton />}
+            />
+          </Box>
+          <Stack direction="column" spacing={6} justifyContent="center">
+            <chakra.h1
+              fontSize="5xl"
+              lineHeight={1}
+              fontWeight="bold"
+              textAlign="left"
+            >
+              On a mission to empower Front end developers
+            </chakra.h1>
+            <Box>
+              <Content>
+                Building products is hard. We've built our fair share and we've
+                noticed the problems you always run into.
+              </Content>
+              <Content mt={4}>
+                TemplatesKart provides the best ChakraUI templates. Now you can
+                focus on your business, not on the boilerplate.
+              </Content>
+              <Content mt={4}>
+                You want to build a product and we want to help you. Building
+                products has changed our lives in ways we couldn't imagine and
+                we want to help you achieve that success too.
+              </Content>
+            </Box>
+            <Link href="#" fontSize="sm" color="blue.400">
+              See how people are using our components →
+            </Link>
+          </Stack>
+        </Stack>
+      </Container>
+      <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
         {milestones.map((milestone) => (
           <Flex key={milestone.id} mb="10px">
             <Show above="md" ssr={false}>
@@ -116,7 +168,7 @@ const Milestones = () => {
           </Flex>
         ))}
       </Container>
-      <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+      {/* <Container maxW="5xl" p={{ base: 5, md: 10 }}>
         <Box
           pos="relative"
           boxShadow="2xl"
@@ -184,10 +236,63 @@ const Milestones = () => {
             </Stack>
           </Stack>
         </Box>
-      </Container>
+      </Container> */}
     </Fragment>
   );
 };
+
+const Content = ({ children, ...props }: PropsWithChildren<TextProps>) => {
+  return (
+    <Text
+      fontSize="md"
+      textAlign="left"
+      lineHeight="1.375"
+      fontWeight="400"
+      color="gray.500"
+      {...props}
+    >
+      {children}
+    </Text>
+  );
+};
+
+function DottedBox() {
+  return (
+    <Box
+      position="absolute"
+      left="-45px"
+      top="-30px"
+      height="full"
+      maxW="700px"
+      zIndex={-1}
+    >
+      <svg
+        color={useColorModeValue("rgba(55,65,81, 0.1)", "rgba(55,65,81, 0.7)")}
+        width="350"
+        height="420"
+        fill="none"
+      >
+        <defs>
+          <pattern
+            id="5d0dd344-b041-4d26-bec4-8d33ea57ec9b"
+            x="0"
+            y="0"
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
+          </pattern>
+        </defs>
+        <rect
+          width="404"
+          height="404"
+          fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)"
+        ></rect>
+      </svg>
+    </Box>
+  );
+}
 
 interface CardProps {
   id: number;

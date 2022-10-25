@@ -6,6 +6,8 @@ import {
   IconButton,
   Box,
   useDisclosure,
+  Show,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import { animateScroll as scroll } from "react-scroll";
@@ -82,23 +84,26 @@ export default function Layout({ children }: LayoutProps) {
           navigationLinks={navigationLinks}
           eucronaAccounts={eucronaAccounts}
         />
-
-        <Fade in={showButton} unmountOnExit>
-          <IconButton
-            onClick={handleScrollToTop}
-            aria-label="top"
-            zIndex={1000}
-            shadow="lg"
-            size="md"
-            rounded={"full"}
-            position="fixed"
-            bottom={6}
-            right={12}
-            colorScheme={"primary"}
-          >
-            <ChevronUpIcon fontSize="1.5em" />
-          </IconButton>
-        </Fade>
+        <Show above="md">
+          <Fade in={showButton} unmountOnExit style={{ zIndex: 1000 }}>
+            <Tooltip label="Scroll to Top" closeOnScroll>
+              <IconButton
+                onClick={handleScrollToTop}
+                aria-label="top"
+                zIndex={1000}
+                shadow="lg"
+                size="lg"
+                rounded={"full"}
+                position="fixed"
+                bottom={12}
+                right={16}
+                colorScheme={"primary"}
+              >
+                <ChevronUpIcon fontSize="1.5em" />
+              </IconButton>
+            </Tooltip>
+          </Fade>
+        </Show>
         <Box>{children}</Box>
         <Box marginTop={"auto"}>
           <Divider />

@@ -10,14 +10,13 @@ import {
   VStack,
   Flex,
   Image,
-  Divider,
-  Link,
   Button,
   useColorModeValue,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 
-import type { SVGProps } from "react";
-
+// import type { SVGProps } from "react";
+import { Link } from "@remix-run/react";
 // Here we have used react-icons package for the icons
 import {
   MdOutlinePersonPin,
@@ -64,7 +63,7 @@ const Solution: IFeature1[] = [
 interface IFeature2 {
   heading: string;
   content: string;
-  icon: SVGProps<SVGElement>;
+  icon: any;
 }
 
 const features: IFeature2[] = [
@@ -204,6 +203,55 @@ const Solutions = () => {
         </svg>
       </Box>
       <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
+        <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
+          Everything your app needs and more
+        </chakra.h3>
+        <SimpleGrid
+          columns={{ base: 1, sm: 2, md: 3 }}
+          placeItems="center"
+          spacing={10}
+          mb={4}
+        >
+          {features.map((feature, index) => (
+            <Box
+              key={index}
+              _light={{ bg: "gray.50" }}
+              _dark={{ bg: "gray.700" }}
+              rounded="lg"
+              boxShadow="2xl"
+              p={6}
+              textAlign="center"
+              pos="relative"
+            >
+              <Flex
+                p={2}
+                w="max-content"
+                color="white"
+                bgGradient="linear(to-br, #228be6, #15aabf)"
+                rounded="md"
+                marginInline="auto"
+                pos="absolute"
+                left={0}
+                right={0}
+                top="-1.5rem"
+                boxShadow="lg"
+              >
+                {feature.icon}
+              </Flex>
+              <chakra.h3 fontWeight="semibold" fontSize="2xl" mt={6}>
+                {feature.heading}
+              </chakra.h3>
+              <Text fontSize="md" mt={4}>
+                {feature.content}
+              </Text>
+              <ChakraLink href="#" mt={4} fontSize="sm" color="blue.400">
+                Learn more →
+              </ChakraLink>
+            </Box>
+          ))}
+        </SimpleGrid>
+      </Container>
+      <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
         <chakra.h2 fontSize="4xl" fontWeight="bold" textAlign="center" mb={3}>
           How it works?
         </chakra.h2>
@@ -253,56 +301,7 @@ const Solutions = () => {
           />
         </Stack>
       </Container>
-      {/* <Divider /> */}
-      <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
-        <chakra.h3 fontSize="4xl" fontWeight="bold" mb={20} textAlign="center">
-          Everything your app needs and more
-        </chakra.h3>
-        <SimpleGrid
-          columns={{ base: 1, sm: 2, md: 3 }}
-          placeItems="center"
-          spacing={10}
-          mb={4}
-        >
-          {features.map((feature, index) => (
-            <Box
-              key={index}
-              _light={{ bg: "gray.50" }}
-              _dark={{ bg: "gray.700" }}
-              rounded="lg"
-              boxShadow="2xl"
-              p={6}
-              textAlign="center"
-              pos="relative"
-            >
-              <Flex
-                p={2}
-                w="max-content"
-                color="white"
-                bgGradient="linear(to-br, #228be6, #15aabf)"
-                rounded="md"
-                marginInline="auto"
-                pos="absolute"
-                left={0}
-                right={0}
-                top="-1.5rem"
-                boxShadow="lg"
-              >
-                {feature.icon}
-              </Flex>
-              <chakra.h3 fontWeight="semibold" fontSize="2xl" mt={6}>
-                {feature.heading}
-              </chakra.h3>
-              <Text fontSize="md" mt={4}>
-                {feature.content}
-              </Text>
-              <Link href="#" mt={4} fontSize="sm" color="blue.400">
-                Learn more →
-              </Link>
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Container>
+
       <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
         <Stack
           direction={{ base: "column", lg: "row" }}
@@ -325,7 +324,7 @@ const Solutions = () => {
               bgGradient="linear(to-l, #0ea5e9,#2563eb)"
               bgClip="text"
             >
-              Get in touch or create an account.
+              Create an account or learn more.
             </chakra.h2>
           </Box>
           <Stack
@@ -338,23 +337,23 @@ const Solutions = () => {
               colorScheme="primary"
               // href="#"
               variant="solid"
-              size="lg"
-              rounded="md"
+              // size="lg"
+              // rounded="md"
               mb={{ base: 2, sm: 0 }}
-              lineHeight={1}
+              // lineHeight={1}
             >
               Create Eucrona Account
             </Button>
             <Button
-              // as={Link}
-              // href="#"
-              size="lg"
-              rounded="md"
+              as={Link}
+              to={"/Infrastructure"}
+              // size="lg"
+              // rounded="md"
               mb={{ base: 2, sm: 0 }}
               variant={"solid"}
               // bg={useColorModeValue("gray.200", "gray.600")}
               // _hover={{ bg: useColorModeValue("gray.300", "gray.500") }}
-              lineHeight={1}
+              // lineHeight={1}
             >
               Learn more
             </Button>
