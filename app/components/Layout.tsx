@@ -8,6 +8,8 @@ import {
   useDisclosure,
   Show,
   Tooltip,
+  Center,
+  Skeleton,
 } from "@chakra-ui/react";
 
 import { animateScroll as scroll } from "react-scroll";
@@ -114,5 +116,7 @@ export default function Layout({ children }: LayoutProps) {
         </Box>
       </Box>
     );
+  } else {
+    return <Skeleton height="90vh" margin={2} rounded="lg" />;
   }
 }
