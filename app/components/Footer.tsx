@@ -7,7 +7,7 @@ import {
   IconButton,
   LinkProps,
   Button,
-  Show,
+  Box,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 
@@ -47,7 +47,14 @@ function Footer({ navigationLinks, eucronaAccounts }: FooterProps) {
         />
       </NavLink>
 
-      <Show breakpoint="(min-width: 370px)">
+      <Box
+        sx={{
+          display: "flex",
+          "@media screen and (max-width: 370px)": {
+            display: "none",
+          },
+        }}
+      >
         <Stack spacing={4} alignItems="center" direction={"row"}>
           {navigationLinks.map((link, index) => (
             <NavLink key={index} to={link.url} draggable="false">
@@ -57,9 +64,16 @@ function Footer({ navigationLinks, eucronaAccounts }: FooterProps) {
             </NavLink>
           ))}
         </Stack>
-      </Show>
+      </Box>
 
-      <Show breakpoint="(max-width: 369px)">
+      <Box
+        sx={{
+          display: "none",
+          "@media screen and (max-width: 370px)": {
+            display: "flex",
+          },
+        }}
+      >
         <Stack spacing={2} alignItems="center" direction={"column"}>
           {navigationLinks.map((link, index) => (
             <NavLink key={index} to={link.url} draggable="false">
@@ -69,7 +83,7 @@ function Footer({ navigationLinks, eucronaAccounts }: FooterProps) {
             </NavLink>
           ))}
         </Stack>
-      </Show>
+      </Box>
 
       <Stack direction="row" spacing={2} alignItems="center">
         {eucronaAccounts.map((value, index) => (

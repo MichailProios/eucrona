@@ -74,50 +74,48 @@ export default function Layout({ children }: LayoutProps) {
     }
   };
 
-  if (flag) {
-    return (
-      <Box
-        display={"flex"}
-        width={"100%"}
-        minHeight={height}
-        flexDirection={"column"}
-        justifyContent="flex-start"
-      >
-        <Navbar
+  return (
+    <Box
+      display={"flex"}
+      width={"100%"}
+      minHeight={height || "100vh"}
+      flexDirection={"column"}
+      justifyContent="flex-start"
+    >
+      <Navbar
+        navigationLinks={navigationLinks}
+        eucronaAccounts={eucronaAccounts}
+      />
+
+      <Box display={{ base: "none", md: "flex" }}>
+        <Fade in={showButton} unmountOnExit style={{ zIndex: 1000 }}>
+          <Tooltip label="Scroll to Top" closeOnScroll>
+            <IconButton
+              onClick={handleScrollToTop}
+              aria-label="top"
+              zIndex={1000}
+              shadow="lg"
+              size="lg"
+              rounded={"full"}
+              position="fixed"
+              bottom={12}
+              right={16}
+              colorScheme={"primary"}
+            >
+              <ChevronUpIcon fontSize="1.5em" />
+            </IconButton>
+          </Tooltip>
+        </Fade>
+      </Box>
+
+      <Box>{children}</Box>
+      <Box marginTop={"auto"}>
+        <Divider />
+        <Footer
           navigationLinks={navigationLinks}
           eucronaAccounts={eucronaAccounts}
         />
-        <Show above="md">
-          <Fade in={showButton} unmountOnExit style={{ zIndex: 1000 }}>
-            <Tooltip label="Scroll to Top" closeOnScroll>
-              <IconButton
-                onClick={handleScrollToTop}
-                aria-label="top"
-                zIndex={1000}
-                shadow="lg"
-                size="lg"
-                rounded={"full"}
-                position="fixed"
-                bottom={12}
-                right={16}
-                colorScheme={"primary"}
-              >
-                <ChevronUpIcon fontSize="1.5em" />
-              </IconButton>
-            </Tooltip>
-          </Fade>
-        </Show>
-        <Box>{children}</Box>
-        <Box marginTop={"auto"}>
-          <Divider />
-          <Footer
-            navigationLinks={navigationLinks}
-            eucronaAccounts={eucronaAccounts}
-          />
-        </Box>
       </Box>
-    );
-  } else {
-    return <></>;
-  }
+    </Box>
+  );
 }

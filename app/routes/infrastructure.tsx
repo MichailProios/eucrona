@@ -13,7 +13,6 @@ import {
   Stack,
   Button,
   Skeleton,
-  Show,
   Image,
 } from "@chakra-ui/react";
 
@@ -81,9 +80,17 @@ const milestones = [
   },
 ];
 
-const Milestones = () => {
-  // const isMobile = useBreakpointValue({ base: true, md: false });
-  // const isDesktop = useBreakpointValue({ base: false, md: true });
+//
+
+export default function Infrastructure() {
+  // console.log(test);
+  const isDesktop = useBreakpointValue(
+    { base: false, md: true },
+    {
+      fallback: { base: false, md: true },
+    }
+  );
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <Fragment>
@@ -92,7 +99,7 @@ const Milestones = () => {
           Infrastructure
         </chakra.h3>
         <Stack
-          direction={{ base: "column", md: "row" }}
+          direction={{ base: "column", lg: "row" }}
           justifyContent="center"
         >
           <Box mr={{ base: 0, md: 5 }} pos="relative">
@@ -106,6 +113,7 @@ const Milestones = () => {
               objectFit="cover"
               src={temp2}
               rounded="md"
+              loading="eager"
               fallback={<Skeleton />}
             />
           </Box>
@@ -141,8 +149,8 @@ const Milestones = () => {
       </Container>
       <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
         {milestones.map((milestone) => (
-          <Flex key={milestone.id} mb="10px">
-            <Show above="md" ssr={false}>
+          <div key={milestone.id}>
+            <Flex mb="10px" display={{ base: "none", md: "flex" }}>
               {milestone.id % 2 === 0 && (
                 <>
                   <EmptyCard />
@@ -150,96 +158,31 @@ const Milestones = () => {
                   <Card {...milestone} />
                 </>
               )}
+              {/* </chakra.span> */}
 
+              {/* <chakra.span display={{ base: "none", md: "flex" }}> */}
               {milestone.id % 2 !== 0 && (
                 <>
                   <Card {...milestone} />
+
                   <LineWithDot />
                   <EmptyCard />
                 </>
               )}
-            </Show>
+            </Flex>
 
-            {/* Mobile view */}
-            <Show below="md" ssr={false}>
-              <LineWithDot />
-              <Card {...milestone} />
-            </Show>
-          </Flex>
+            <Flex mb="10px" display={{ base: "flex", md: "none" }}>
+              <>
+                <LineWithDot />
+                <Card {...milestone} />
+              </>
+            </Flex>
+          </div>
         ))}
       </Container>
-      {/* <Container maxW="5xl" p={{ base: 5, md: 10 }}>
-        <Box
-          pos="relative"
-          boxShadow="2xl"
-          bg={useColorModeValue("gray.50", "gray.700")}
-          p={{ base: 4, sm: 8 }}
-          overflow="hidden"
-          rounded="lg"
-        >
-          <Stack
-            pos="relative"
-            zIndex={1}
-            direction="column"
-            spacing={5}
-            textAlign="left"
-          >
-            <chakra.h1 fontSize="4xl" lineHeight={1.2} fontWeight="bold">
-              Join the community
-            </chakra.h1>
-            <chakra.h1
-              color="gray.400"
-              fontSize="xl"
-              maxW="600px"
-              lineHeight={1.2}
-            >
-              TemplatesKart has a very friendly community, we are always open to
-              new ideas and feedback. Join us on Discord or GitHub Discussions
-              to get any kind of help or on Twitter to get notified about
-              releases.
-            </chakra.h1>
-
-            <Stack direction={{ base: "column", md: "row" }} spacing={3}>
-              <Button
-                leftIcon={<FaGithub />}
-                as={Link}
-                href="#"
-                rounded="md"
-                color="gray.800"
-                bg="white"
-                _hover={{ bg: "gray.100" }}
-              >
-                Github Discussions
-              </Button>
-              <Button
-                leftIcon={<BsDiscord />}
-                as={Link}
-                href="#"
-                rounded="md"
-                color="white"
-                bg="purple.500"
-                _hover={{ bg: "purple.600" }}
-              >
-                Discord community
-              </Button>
-              <Button
-                leftIcon={<AiOutlineTwitter />}
-                as={Link}
-                href="#"
-                rounded="md"
-                color="white"
-                bg="twitter.400"
-                _hover={{ bg: "twitter.500" }}
-              >
-                Follow us on Twitter
-              </Button>
-            </Stack>
-          </Stack>
-        </Box>
-      </Container> */}
     </Fragment>
   );
-};
+}
 
 const Content = ({ children, ...props }: PropsWithChildren<TextProps>) => {
   return (
@@ -404,5 +347,3 @@ const EmptyCard = () => {
     ></Box>
   );
 };
-
-export default Milestones;

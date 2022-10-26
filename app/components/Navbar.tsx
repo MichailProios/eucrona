@@ -21,6 +21,7 @@ import {
   Link,
   DrawerCloseButton,
   useBreakpoint,
+  Box,
 } from "@chakra-ui/react";
 
 import { NavLink } from "@remix-run/react";
@@ -132,7 +133,14 @@ function NavbarHeader({
       >
         <HStack spacing="40px">
           <NavLink to={"/"} prefetch="render" draggable={false}>
-            <Show breakpoint="(min-width: 370px)">
+            <Box
+              sx={{
+                display: "flex",
+                "@media screen and (max-width: 370px)": {
+                  display: "none",
+                },
+              }}
+            >
               <Image
                 objectFit="contain"
                 h={50}
@@ -141,9 +149,17 @@ function NavbarHeader({
                 src={LogoSideways}
                 alt="Eucrona-Logo"
                 draggable="false"
+                loading="eager"
               />
-            </Show>
-            <Show breakpoint="(max-width: 369px)">
+            </Box>
+            <Box
+              sx={{
+                display: "none",
+                "@media screen and (max-width: 370px)": {
+                  display: "flex",
+                },
+              }}
+            >
               <Image
                 objectFit="contain"
                 h={50}
@@ -151,8 +167,9 @@ function NavbarHeader({
                 src={LogoPlain}
                 alt="Eucrona-Logo"
                 draggable="false"
+                loading="eager"
               />
-            </Show>
+            </Box>
           </NavLink>
           <HStack spacing="12px" display={{ base: "none", lg: "flex" }}>
             {navigationLinks.map((link, index) => (
@@ -281,6 +298,7 @@ function NavbarDrawer({
               src={LogoPlain}
               alt="Eucrona-Logo"
               draggable="false"
+              loading="eager"
             />
           </NavLink>
         </DrawerHeader>
