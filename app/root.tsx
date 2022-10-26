@@ -1,6 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import { ChakraProvider } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  ColorModeScript,
+  ColorModeProvider,
+} from "@chakra-ui/react";
+
+import { ThemeProvider as EmotionProvider } from "@emotion/react";
 
 import { useCatch } from "@remix-run/react";
 
@@ -71,8 +77,12 @@ const Document = withEmotionCache(
             />
           ))}
         </head>
+
         <body style={{ height: "100%", overflow: "overlay" }}>
-          {children}
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <ChakraProvider theme={theme} resetCSS>
+            {children}
+          </ChakraProvider>
           <ScrollRestoration />
           <Scripts />
           {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
@@ -84,13 +94,12 @@ const Document = withEmotionCache(
 
 //
 export default function App() {
+  console.log(theme.config.initialColorMode);
   return (
     <Document>
-      <ChakraProvider theme={theme}>
-        <Layout>
-          <Outlet />
-        </Layout>
-      </ChakraProvider>
+      <Layout>
+        <Outlet />
+      </Layout>
     </Document>
   );
 }
@@ -112,11 +121,9 @@ export function CatchBoundary() {
 
   return (
     <Document>
-      <ChakraProvider theme={theme}>
-        <Layout>
-          <Catch caught={caught} />
-        </Layout>
-      </ChakraProvider>
+      <Layout>
+        <Catch caught={caught} />
+      </Layout>
     </Document>
   );
 }
