@@ -1,12 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import {
-  ChakraProvider,
-  ColorModeScript,
-  ColorModeProvider,
-} from "@chakra-ui/react";
-
-import { ThemeProvider as EmotionProvider } from "@emotion/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 
 import { useCatch } from "@remix-run/react";
 
@@ -79,10 +73,7 @@ const Document = withEmotionCache(
         </head>
 
         <body style={{ height: "100%", overflow: "overlay" }}>
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-          <ChakraProvider theme={theme} resetCSS>
-            {children}
-          </ChakraProvider>
+          <ChakraProvider theme={theme}>{children}</ChakraProvider>
           <ScrollRestoration />
           <Scripts />
           {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
@@ -94,7 +85,6 @@ const Document = withEmotionCache(
 
 //
 export default function App() {
-  console.log(theme.config.initialColorMode);
   return (
     <Document>
       <Layout>
