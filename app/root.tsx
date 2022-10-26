@@ -24,6 +24,8 @@ import theme from "app/styles/theme";
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Eucrona",
+  description:
+    "Production-ready Applications and Solutions built and developed to last",
   viewport: "width=device-width,initial-scale=1",
 });
 
