@@ -118,10 +118,6 @@ export default function Layout({ children }: LayoutProps) {
       </Box>
     );
   } else {
-    return (
-      <Center height={"60vh"}>
-        <Spinner size="xl" />
-      </Center>
-    );
+    return <></>;
   }
 }
