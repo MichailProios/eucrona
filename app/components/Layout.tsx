@@ -10,6 +10,7 @@ import {
   Tooltip,
   Center,
   Skeleton,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { animateScroll as scroll } from "react-scroll";
@@ -117,6 +118,10 @@ export default function Layout({ children }: LayoutProps) {
       </Box>
     );
   } else {
-    return <Skeleton height="90vh" margin={2} rounded="lg" />;
+    return (
+      <Center height={"60vh"}>
+        <Spinner size="xl" />
+      </Center>
+    );
   }
 }
