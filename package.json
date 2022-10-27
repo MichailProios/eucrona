@@ -32,7 +32,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-scroll": "^1.8.8",
-    "remix": "^1.7.3"
+    "remix": "^1.7.3",
+    "remix-utils": "^3.2.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.18.0",
