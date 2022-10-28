@@ -26,8 +26,7 @@ export default function Contacts() {
             Contact Us
           </Heading>
           <Text fontSize="md" textAlign="center">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque
+            Send us your requests and questions
           </Text>
         </Flex>
 
@@ -48,20 +47,24 @@ export default function Contacts() {
             >
               <FormControl id="name">
                 <FormLabel>Name</FormLabel>
-                <Input type="text" placeholder="Ahmad" rounded="md" />
+                <Input
+                  type="text"
+                  placeholder="Enter your full name"
+                  rounded="md"
+                />
               </FormControl>
               <FormControl id="email">
                 <FormLabel>Email</FormLabel>
-                <Input type="email" placeholder="test@test.com" rounded="md" />
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  rounded="md"
+                />
               </FormControl>
             </Stack>
             <FormControl id="subject">
               <FormLabel>Subject</FormLabel>
-              <Input
-                type="text"
-                placeholder="Are you available for freelance work?"
-                rounded="md"
-              />
+              <Input type="text" placeholder="Enter the subject" rounded="md" />
             </FormControl>
             <FormControl id="message">
               <FormLabel>Message</FormLabel>

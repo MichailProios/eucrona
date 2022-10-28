@@ -15,6 +15,7 @@ import {
 import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 
 import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
+import ExecutionEnvironment from "exenv";
 
 import Layout from "app/components/Layout";
 import Catch from "app/components/Catch";
