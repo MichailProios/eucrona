@@ -12,16 +12,11 @@ import {
   VStack,
   Flex,
   Text,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useActionData } from "@remix-run/react";
 
 import { json } from "@remix-run/cloudflare";
-
 import {
   ValidatedForm,
   validationError,
@@ -31,11 +26,13 @@ import {
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
 
+import { sesTest } from "app/utils/email.server";
+
 export const validator = withZod(
   z.object({
     fullName: z.string().min(1, { message: "Full Name is required" }),
 
-    email: z
+    emailAddress: z
       .string()
       .min(1, { message: "Email is required" })
       .email("Must be a valid email"),
@@ -48,27 +45,62 @@ export const validator = withZod(
 
 export async function action({ request }: { request: Request }) {
   const data = await validator.validate(await request.formData());
-  console.log(data);
 
   if (data.error) {
     return validationError(data.error);
   }
 
+  const { fullName, emailAddress, subject, body } = data.data;
+
+  sesTest()
+    .then((data: any) => {
+      console.log(data);
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
+
   return data;
 }
 
-export default function Contacts() {
+function TextField(props: any) {
+  const { error, getInputProps } = useField(props.name);
+
+  return (
+    <FormControl id={props.name} isInvalid={error ? true : false}>
+      <FormLabel>{props.label}</FormLabel>
+      <Input {...props} {...getInputProps()} />
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
+  );
+}
+
+function TextArea(props: any) {
+  const { error, getInputProps } = useField(props.name);
+
+  return (
+    <FormControl id={props.name} isInvalid={error ? true : false}>
+      <FormLabel>{props.label}</FormLabel>
+      <Textarea {...props} {...getInputProps()} />
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
+  );
+}
+
+function SubmitButton(props: any) {
+  const isSubmitting = useIsSubmitting();
   const actionData = useActionData();
 
-  const { error, getInputProps } = useField("fullName", {
-    formId: "contactForm",
-  });
-  const isSubmitting = useIsSubmitting("contactForm");
+  // console.log(actionData);
 
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  return (
+    <Button {...props} isLoading={isSubmitting} loadingText="Sending">
+      {props.label}
+    </Button>
+  );
+}
 
+export default function Contacts() {
   return (
     <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
       <Stack
@@ -101,7 +133,7 @@ export default function Contacts() {
               spacing={3}
               direction={{ base: "column", md: "row" }}
             >
-              <FormControl id="fullName" isInvalid={error ? true : false}>
+              {/* <FormControl id="fullName" isInvalid={error ? true : false}>
                 <FormLabel>Name</FormLabel>
                 <Input
                   type="text"
@@ -109,49 +141,49 @@ export default function Contacts() {
                   placeholder="Enter your full name"
                   rounded="md"
                 />
-                {error && <FormErrorMessage>{error}</FormErrorMessage>}
-              </FormControl>
-              <FormControl id="emailAddress">
-                <FormLabel>Email</FormLabel>
-                <Input
-                  type="email"
-                  name="emailAddress"
-                  placeholder="Enter your email address"
-                  rounded="md"
-                />
-              </FormControl>
-            </Stack>
-            <FormControl id="subject">
-              <FormLabel>Subject</FormLabel>
-              <Input
-                type="text"
-                name="subject"
-                placeholder="Enter the subject"
-                rounded="md"
-              />
-            </FormControl>
-            <FormControl id="body">
-              <FormLabel>Message</FormLabel>
-              <Textarea
-                size="lg"
-                name="body"
-                placeholder="Enter your message"
-                rounded="md"
-              />
-            </FormControl>
+                <FormErrorMessage>{error}</FormErrorMessage>
+              </FormControl> */}
 
-            {actionData && (
-              <Alert variant="info">
-                <AlertIcon />
-                <AlertTitle>{actionData.title}</AlertTitle>
-                <AlertDescription>{actionData.description}</AlertDescription>
-              </Alert>
-            )}
+              <TextField
+                label="Name"
+                name="fullName"
+                placeholder="Enter your full name"
+                rounded="md"
+                type="text"
+              />
+
+              <TextField
+                label="Email"
+                type="email"
+                name="emailAddress"
+                placeholder="Enter your email address"
+                rounded="md"
+              />
+            </Stack>
+
+            <TextField
+              label="Subject"
+              type="text"
+              name="subject"
+              placeholder="Enter the subject"
+              rounded="md"
+            />
+
+            <TextArea
+              label="Message"
+              type="text"
+              size="lg"
+              name="body"
+              placeholder="Enter your message"
+              rounded="md"
+            />
           </VStack>
           <VStack w="100%">
-            <Button type="submit" colorScheme="primary" disabled={isSubmitting}>
-              Send Message
-            </Button>
+            <SubmitButton
+              type="submit"
+              colorScheme="primary"
+              label="Send Message"
+            />
           </VStack>
         </VStack>
       </Stack>
