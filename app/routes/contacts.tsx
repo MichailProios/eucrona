@@ -26,8 +26,6 @@ import {
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
 
-import { sesTest } from "app/utils/email.server";
-
 export const validator = withZod(
   z.object({
     fullName: z.string().min(1, { message: "Full Name is required" }),
@@ -51,14 +49,6 @@ export async function action({ request }: { request: Request }) {
   }
 
   const { fullName, emailAddress, subject, body } = data.data;
-
-  sesTest()
-    .then((data: any) => {
-      console.log(data);
-    })
-    .catch((err: any) => {
-      console.log(err);
-    });
 
   return data;
 }
