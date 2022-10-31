@@ -24,7 +24,7 @@ import {
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
-import { sesTest } from "~/utils/email.server";
+import { sesSendEmail } from "~/utils/email.server";
 
 export const validator = withZod(
   z.object({
@@ -50,13 +50,7 @@ export async function action({ request }: { request: Request }) {
 
   const { fullName, emailAddress, subject, body } = data.data;
 
-  sesTest()
-    .then((data: any) => {
-      console.log(data);
-    })
-    .catch((err: any) => {
-      console.log(err);
-    });
+  await sesSendEmail(fullName, emailAddress, subject, body);
 
   return data;
 }

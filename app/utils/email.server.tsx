@@ -2,22 +2,27 @@ import AWS from "aws-sdk";
 
 const ses = new AWS.SES({ region: "us-east-1" });
 
-function sesTest() {
+function sesSendEmail(
+  fullName: any,
+  emailAddress: any,
+  subject: any,
+  body: any
+) {
   const emailParams = {
     Destination: {
-      ToAddresses: ["proios.michael@gmail.com"],
+      ToAddresses: ["mproios@eucrona.com"],
     },
     Message: {
       Body: {
-        Text: { Data: "From Contact Form: " },
+        Text: { Data: body },
       },
 
-      Subject: { Data: "From: " },
+      Subject: { Data: `New inqury ${fullName} - ${subject}` },
     },
-    Source: "",
+    Source: "inquries@eucrona.com",
   };
 
   return ses.sendEmail(emailParams).promise();
 }
 
-export { sesTest };
+export { sesSendEmail };
