@@ -12,15 +12,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
+import type { MetaFunction, LinksFunction } from "@remix-run/node";
 
-import { ServerStyleContext, ClientStyleContext } from "~/styles/context";
-import ExecutionEnvironment from "exenv";
+import { ServerStyleContext, ClientStyleContext } from "app/styles/context";
 
 import Layout from "app/components/Layout";
 import Catch from "app/components/Catch";
 
 import theme from "app/styles/theme";
+
+import global from "app/styles/global.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -32,10 +33,21 @@ export const meta: MetaFunction = () => ({
 
 export let links: LinksFunction = () => {
   return [
+    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    { rel: "preconnect", href: "https://fonts.gstatic.com" },
+
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap",
+    },
+    {
+      rel: "stylesheet",
+      href: global,
+    },
     {
       rel: "icon",
       type: "image/png",
-      href: "/favicon.ico",
+      href: "public/favicon.ico",
     },
   ];
 };
@@ -49,13 +61,17 @@ const Document = withEmotionCache(
     const serverStyleData = useContext(ServerStyleContext);
     const clientStyleData = useContext(ClientStyleContext);
 
+    // Only executed on client
     useEffect(() => {
+      // re-link sheet container
       emotionCache.sheet.container = document.head;
+      // re-inject tags
       const tags = emotionCache.sheet.tags;
       emotionCache.sheet.flush();
       tags.forEach((tag) => {
         (emotionCache.sheet as any)._insertTag(tag);
       });
+      // reset cache to reapply global styles
       clientStyleData?.reset();
     }, []);
 
@@ -84,7 +100,6 @@ const Document = withEmotionCache(
   }
 );
 
-//
 export default function App() {
   return (
     <Document>
