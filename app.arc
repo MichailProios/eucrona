@@ -11,4 +11,6 @@ eucrona
 @aws
 profile default
 region us-east-1
-  
+policies
+  architect-default-policies
+  AmazonSESFullAccess
