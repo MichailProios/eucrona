@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { useActionData } from "@remix-run/react";
 
-import { json } from "@remix-run/cloudflare";
 import {
   ValidatedForm,
   validationError,
@@ -25,6 +24,7 @@ import {
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
+import { sesTest } from "~/utils/email.server";
 
 export const validator = withZod(
   z.object({
@@ -49,6 +49,14 @@ export async function action({ request }: { request: Request }) {
   }
 
   const { fullName, emailAddress, subject, body } = data.data;
+
+  sesTest()
+    .then((data: any) => {
+      console.log(data);
+    })
+    .catch((err: any) => {
+      console.log(err);
+    });
 
   return data;
 }

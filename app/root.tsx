@@ -22,6 +22,7 @@ import Catch from "app/components/Catch";
 import theme from "app/styles/theme";
 
 import global from "app/styles/global.css";
+import favicon from "public/favicon.ico";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -47,7 +48,7 @@ export let links: LinksFunction = () => {
     {
       rel: "icon",
       type: "image/png",
-      href: "public/favicon.ico",
+      href: favicon,
     },
   ];
 };
