@@ -1,11 +1,28 @@
 import { useEffect, useState } from "react";
 
+export function useScrollButtonVisibility() {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const handleScrollButtonVisiblity = () => {
+        window.pageYOffset > 300 ? setShowButton(true) : setShowButton(false);
+      };
+      window.addEventListener("scroll", handleScrollButtonVisiblity);
+      return () => {
+        window.removeEventListener("scroll", handleScrollButtonVisiblity);
+      };
+    }
+  }, []); // Empty array ensures that effect is only run on mount
+  return showButton;
+}
+
 type WindowDimentions = {
   width: number | undefined;
   height: number | undefined;
 };
 
-function useWindowDimensions() {
+export function useWindowDimensions() {
   const [windowDimensions, setWindowSize] = useState<WindowDimentions>({
     width: undefined,
     height: undefined,
@@ -35,5 +52,3 @@ function useWindowDimensions() {
   }, []); // Empty array ensures that effect is only run on mount
   return windowDimensions;
 }
-
-export default useWindowDimensions;

@@ -13,15 +13,31 @@ import {
   Box,
   Heading,
   Input,
-  createIcon,
   FormControl,
+  FormErrorMessage,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
-// Here we have used react-icons package for the icons
+
+import { useActionData } from "@remix-run/react";
+
+import {
+  ValidatedForm,
+  validationError,
+  useIsSubmitting,
+  useField,
+} from "remix-validated-form";
+import { withZod } from "@remix-validated-form/with-zod";
+import { z } from "zod";
 
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaBook } from "react-icons/fa";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { Link } from "@remix-run/react";
+
+// import type { LoaderFunction } from "@remix-run/node";
+import { db } from "app/utils/db.server";
 
 interface StatData {
   label: string;
@@ -139,7 +155,81 @@ const features = [
     ),
   },
 ];
+
+export const validator = withZod(
+  z.object({
+    emailAddress: z
+      .string()
+      .min(1, { message: "Email is required" })
+      .email("Must be a valid email"),
+  })
+);
+
+export async function action({ request }: { request: Request }) {
+  const data = await validator.validate(await request.formData());
+
+  if (data.error) {
+    return validationError(data.error);
+  }
+
+  const { emailAddress } = data.data;
+
+  const exists = await db.findOne({
+    TableName: "Subscribers",
+    Key: { EmailAddress: { S: emailAddress } },
+  });
+
+  if (exists?.Item) {
+    return "exists";
+  }
+
+  await db.createOne({
+    TableName: "Subscribers",
+    Item: { EmailAddress: { S: emailAddress } },
+  });
+
+  return "success";
+}
+
+function TextField(props: any) {
+  const { error, getInputProps } = useField(props.name);
+  const actionData = useActionData();
+
+  return (
+    <FormControl
+      id={props.name}
+      isInvalid={error ? true : false}
+      w={{ base: "100%", md: "70%" }}
+    >
+      <Input
+        {...props}
+        {...getInputProps()}
+        disabled={actionData === "success"}
+      />
+      <FormErrorMessage>{error}</FormErrorMessage>
+    </FormControl>
+  );
+}
+
+function SubmitButton(props: any) {
+  const isSubmitting = useIsSubmitting();
+  const actionData = useActionData();
+
+  return (
+    <Button
+      {...props}
+      isLoading={isSubmitting}
+      loadingText="Subscribing"
+      disabled={actionData === "success" || isSubmitting}
+    >
+      {props.label}
+    </Button>
+  );
+}
+
 export default function Index() {
+  const actionData = useActionData();
+
   return (
     <Fragment>
       <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
@@ -328,7 +418,11 @@ export default function Index() {
         py={14}
         align={"center"}
         justify={"center"}
-        // bg={useColorModeValue("gray.50", "gray.800")}
+        as={ValidatedForm}
+        validator={validator}
+        method="post"
+        id="subscribeForm"
+        resetAfterSubmit
       >
         <Stack
           boxShadow={"2xl"}
@@ -354,17 +448,48 @@ export default function Index() {
           <Stack
             spacing={4}
             direction={{ base: "column", md: "row" }}
-            w={"full"}
+            w={"100%"}
           >
-            <FormControl>
-              <Input type={"text"} placeholder={"Enter your email address"} />
-            </FormControl>
-            <FormControl w={{ base: "100%", md: "40%" }}>
-              <Button colorScheme="primary" w="100%" variant={"solid"}>
-                Submit
-              </Button>
+            <TextField
+              label="Email Address"
+              type="text"
+              name="emailAddress"
+              placeholder="Enter your email address"
+              rounded="md"
+            />
+
+            <FormControl w={{ base: "100%", md: "30%" }}>
+              <SubmitButton
+                type="submit"
+                colorScheme="primary"
+                w="100%"
+                variant={"solid"}
+                label="Subscribe"
+              />
             </FormControl>
           </Stack>
+          {actionData && (
+            <Alert
+              status={
+                actionData === "success"
+                  ? "success"
+                  : actionData === "exists"
+                  ? "info"
+                  : "error"
+              }
+              rounded="md"
+              w={"full"}
+            >
+              <AlertIcon />
+              <AlertTitle>
+                {actionData === "success"
+                  ? "Subscribed Successfully"
+                  : actionData === "exists"
+                  ? "Already subscribed, please enter a new email address"
+                  : "Failed to Subscribe"}
+              </AlertTitle>
+            </Alert>
+          )}
         </Stack>
       </Flex>
     </Fragment>

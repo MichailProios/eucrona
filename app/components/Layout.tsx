@@ -22,8 +22,8 @@ import Footer from "app/components/Footer";
 
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-import useWindowDimensions from "app/utils/hooks/useWindowDimensions";
-import useScrollButtonVisibility from "~/utils/hooks/useScrollButtonVisibility";
+import { useWindowDimensions } from "app/utils/hooks";
+import { useScrollButtonVisibility } from "app/utils/hooks";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 
 interface LayoutProps {

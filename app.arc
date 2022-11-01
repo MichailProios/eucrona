@@ -14,3 +14,6 @@ region us-east-1
 policies
   architect-default-policies
   AmazonSESFullAccess
+  AmazonDynamoDBFullAccess
+
+

@@ -1,6 +1,6 @@
-import AWS from "aws-sdk";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-const ses = new AWS.SES({ region: "us-east-1" });
+const ses = new SESClient({ region: "us-east-1" });
 
 function sesSendEmail(
   fullName: any,
@@ -22,7 +22,9 @@ function sesSendEmail(
     Source: "inquries@eucrona.com",
   };
 
-  return ses.sendEmail(emailParams).promise();
+  const command = new SendEmailCommand(emailParams);
+
+  return ses.send(command);
 }
 
 export { sesSendEmail };

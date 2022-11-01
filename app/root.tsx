@@ -23,6 +23,8 @@ import theme from "app/styles/theme";
 
 import global from "app/styles/global.css";
 import favicon from "public/favicon.ico";
+import LogoPlain from "public/logos/Logo-Plain.svg";
+import LogoSideways from "public/logos/Logo-Sideways.svg";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -32,7 +34,7 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-export let links: LinksFunction = () => {
+export const links: LinksFunction = () => {
   return [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     { rel: "preconnect", href: "https://fonts.gstatic.com" },
@@ -44,6 +46,16 @@ export let links: LinksFunction = () => {
     {
       rel: "stylesheet",
       href: global,
+    },
+    {
+      rel: "preload",
+      href: LogoPlain,
+      as: "image",
+    },
+    {
+      rel: "preload",
+      href: LogoSideways,
+      as: "image",
     },
     {
       rel: "icon",

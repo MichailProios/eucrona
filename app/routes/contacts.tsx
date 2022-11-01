@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Container,
   FormControl,
@@ -13,6 +12,9 @@ import {
   Flex,
   Text,
   FormErrorMessage,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
 import { useActionData } from "@remix-run/react";
 
@@ -24,7 +26,7 @@ import {
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
-import { sesSendEmail } from "~/utils/email.server";
+import { sesSendEmail } from "app/utils/email.server";
 
 export const validator = withZod(
   z.object({
@@ -50,18 +52,28 @@ export async function action({ request }: { request: Request }) {
 
   const { fullName, emailAddress, subject, body } = data.data;
 
-  await sesSendEmail(fullName, emailAddress, subject, body);
+  try {
+    await sesSendEmail(fullName, emailAddress, subject, body);
 
-  return data;
+    return "success";
+  } catch (err: any) {
+    console.error(err);
+    return "error";
+  }
 }
 
 function TextField(props: any) {
   const { error, getInputProps } = useField(props.name);
+  const actionData = useActionData();
 
   return (
     <FormControl id={props.name} isInvalid={error ? true : false}>
       <FormLabel>{props.label}</FormLabel>
-      <Input {...props} {...getInputProps()} />
+      <Input
+        {...props}
+        {...getInputProps()}
+        disabled={actionData === "success"}
+      />
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   );
@@ -69,11 +81,16 @@ function TextField(props: any) {
 
 function TextArea(props: any) {
   const { error, getInputProps } = useField(props.name);
+  const actionData = useActionData();
 
   return (
     <FormControl id={props.name} isInvalid={error ? true : false}>
       <FormLabel>{props.label}</FormLabel>
-      <Textarea {...props} {...getInputProps()} />
+      <Textarea
+        {...props}
+        {...getInputProps()}
+        disabled={actionData === "success"}
+      />
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
   );
@@ -83,34 +100,39 @@ function SubmitButton(props: any) {
   const isSubmitting = useIsSubmitting();
   const actionData = useActionData();
 
-  // console.log(actionData);
-
   return (
-    <Button {...props} isLoading={isSubmitting} loadingText="Sending">
+    <Button
+      {...props}
+      isLoading={isSubmitting}
+      loadingText="Sending"
+      disabled={actionData === "success" || isSubmitting}
+    >
       {props.label}
     </Button>
   );
 }
 
 export default function Contacts() {
+  const actionData = useActionData();
+
   return (
     <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>
+      <Flex align="center" justify="center" direction="column">
+        <Heading fontSize="4xl" mb={2}>
+          Contact Us
+        </Heading>
+        <Text fontSize="md" textAlign="center">
+          Send us your requests and questions
+        </Text>
+      </Flex>
       <Stack
         spacing={10}
         as={ValidatedForm}
         validator={validator}
         method="post"
         id="contactForm"
+        resetAfterSubmit
       >
-        <Flex align="center" justify="center" direction="column">
-          <Heading fontSize="4xl" mb={2}>
-            Contact Us
-          </Heading>
-          <Text fontSize="md" textAlign="center">
-            Send us your requests and questions
-          </Text>
-        </Flex>
-
         <VStack
           spacing={8}
           w="100%"
@@ -119,23 +141,12 @@ export default function Contacts() {
           boxShadow="lg"
           p={{ base: 5, sm: 10 }}
         >
-          <VStack spacing={4} w="100%">
+          <VStack spacing={6} w="100%">
             <Stack
               w="100%"
               spacing={3}
               direction={{ base: "column", md: "row" }}
             >
-              {/* <FormControl id="fullName" isInvalid={error ? true : false}>
-                <FormLabel>Name</FormLabel>
-                <Input
-                  type="text"
-                  name="fullName"
-                  placeholder="Enter your full name"
-                  rounded="md"
-                />
-                <FormErrorMessage>{error}</FormErrorMessage>
-              </FormControl> */}
-
               <TextField
                 label="Name"
                 name="fullName"
@@ -177,6 +188,20 @@ export default function Contacts() {
               label="Send Message"
             />
           </VStack>
+
+          {actionData && (
+            <Alert
+              status={actionData === "success" ? "success" : "error"}
+              rounded="md"
+            >
+              <AlertIcon />
+              <AlertTitle>
+                {actionData === "success"
+                  ? "Email sent successfully. Thank you!"
+                  : "Email failed to send. Please try again."}
+              </AlertTitle>
+            </Alert>
+          )}
         </VStack>
       </Stack>
     </Container>
