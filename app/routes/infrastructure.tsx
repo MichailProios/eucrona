@@ -83,15 +83,6 @@ const milestones = [
 //
 
 export default function Infrastructure() {
-  // console.log(test);
-  const isDesktop = useBreakpointValue(
-    { base: false, md: true },
-    {
-      fallback: { base: false, md: true },
-    }
-  );
-  const isMobile = useBreakpointValue({ base: true, md: false });
-
   return (
     <Fragment>
       <Container maxW="1200px" px={{ base: 6, md: 10 }} py={14}>

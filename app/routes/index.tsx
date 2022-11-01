@@ -483,10 +483,10 @@ export default function Index() {
               <AlertIcon />
               <AlertTitle>
                 {actionData === "success"
-                  ? "Subscribed Successfully"
+                  ? "Subscribed successfully!"
                   : actionData === "exists"
-                  ? "Already subscribed, please enter a new email address"
-                  : "Failed to Subscribe"}
+                  ? "Already subscribed, please enter a new email address."
+                  : "Failed to subscribe."}
               </AlertTitle>
             </Alert>
           )}

@@ -18,6 +18,7 @@ import { ServerStyleContext, ClientStyleContext } from "app/styles/context";
 
 import Layout from "app/components/Layout";
 import Catch from "app/components/Catch";
+import Error from "app/components/Error";
 
 import theme from "app/styles/theme";
 
@@ -36,8 +37,8 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => {
   return [
-    { rel: "preconnect", href: "https://fonts.googleapis.com" },
-    { rel: "preconnect", href: "https://fonts.gstatic.com" },
+    // { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    // { rel: "preconnect", href: "https://fonts.gstatic.com" },
 
     {
       rel: "stylesheet",
@@ -123,17 +124,15 @@ export default function App() {
   );
 }
 
-// export function ErrorBoundary({ error }: { error: Error }) {
-//   return (
-//     <Document>
-//       <ChakraProvider theme={theme}>
-//         <Layout>
-//           <Catch caught={error} />
-//         </Layout>
-//       </ChakraProvider>
-//     </Document>
-//   );
-// }
+export function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <Document>
+      <Layout>
+        <Error error={error} />
+      </Layout>
+    </Document>
+  );
+}
 
 export function CatchBoundary() {
   const caught = useCatch();

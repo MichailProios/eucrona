@@ -3,17 +3,19 @@ import { Heading, Text, Button, Container, VStack } from "@chakra-ui/react";
 import { NavLink } from "@remix-run/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
-export default function resources() {
+interface ErrorProps {
+  error: any;
+}
+
+export default function Error({ error }: ErrorProps) {
+  console.error(error.stack);
   return (
     <Container mt="5em">
       <VStack>
         <Heading bgGradient="linear(to-br, #228be6, #15aabf)" bgClip="text">
-          Under Development
+          Application Error
         </Heading>
-        <Text fontSize="18px" textAlign={"center"}>
-          This page will be available upon the release of <br />
-          Eucrona Cloud
-        </Text>
+        <Text fontSize="18px">{error.message}</Text>
 
         <Button
           rightIcon={<ArrowForwardIcon />}
