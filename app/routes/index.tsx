@@ -175,7 +175,7 @@ export async function action({ request }: { request: Request }) {
   const { emailAddress } = data.data;
 
   const exists = await db.findOne({
-    TableName: "Subscribers",
+    TableName: "EmailSubscribers",
     Key: { EmailAddress: { S: emailAddress } },
   });
 
@@ -184,7 +184,7 @@ export async function action({ request }: { request: Request }) {
   }
 
   await db.createOne({
-    TableName: "Subscribers",
+    TableName: "EmailSubscribers",
     Item: { EmailAddress: { S: emailAddress } },
   });
 
