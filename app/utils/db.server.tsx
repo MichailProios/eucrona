@@ -4,6 +4,7 @@ import {
   BatchGetItemCommand,
   ScanCommand,
   PutItemCommand,
+  DeleteItemCommand,
 } from "@aws-sdk/client-dynamodb";
 
 //Inputs
@@ -12,6 +13,7 @@ import type {
   BatchGetItemCommandInput,
   GetItemCommandInput,
   PutItemCommandInput,
+  DeleteItemCommandInput,
 } from "@aws-sdk/client-dynamodb";
 
 //Outputs
@@ -20,6 +22,7 @@ import type {
   BatchGetItemCommandOutput,
   GetItemCommandOutput,
   PutItemCommandOutput,
+  DeleteItemCommandOutput,
 } from "@aws-sdk/client-dynamodb";
 
 const ddbClient = new DynamoDBClient({ region: "us-east-1" });
@@ -62,6 +65,17 @@ const db = {
     let data: PutItemCommandOutput | undefined;
     try {
       data = await ddbClient.send(new PutItemCommand(params));
+    } catch (error) {
+      console.error(error);
+    }
+
+    return data;
+  },
+
+  deleteOne: async function (params: DeleteItemCommandInput) {
+    let data: DeleteItemCommandOutput | undefined;
+    try {
+      data = await ddbClient.send(new DeleteItemCommand(params));
     } catch (error) {
       console.error(error);
     }

@@ -161,7 +161,8 @@ export const validator = withZod(
     emailAddress: z
       .string()
       .min(1, { message: "Email is required" })
-      .email("Must be a valid email"),
+      .email("Must be a valid email")
+      .max(50, { message: "Email cannot be more than 50 characters" }),
   })
 );
 
@@ -414,15 +415,15 @@ export default function Index() {
       </Container>
       <Flex
         minH={"50vh"}
-        px={{ base: 6, md: 10 }}
-        py={14}
         align={"center"}
         justify={"center"}
         as={ValidatedForm}
         validator={validator}
         method="post"
         id="subscribeForm"
-        resetAfterSubmit
+        // resetAfterSubmit
+        px={{ base: 6, md: 10 }}
+        py={14}
       >
         <Stack
           boxShadow={"2xl"}
@@ -431,7 +432,7 @@ export default function Index() {
           p={10}
           spacing={8}
           align={"center"}
-          width="650px"
+          maxW="750px"
         >
           <Stack align={"center"} spacing={2}>
             <Heading
@@ -441,8 +442,9 @@ export default function Index() {
             >
               Subscribe
             </Heading>
-            <Text fontSize={"lg"} color={"gray.500"}>
-              Stay up to date!
+            <Text fontSize={"lg"} color={"gray.500"} textAlign="center">
+              No spam, ever. Your address will only be used for updates and
+              news. You can easily unsubscribe any time with a single click.
             </Text>
           </Stack>
           <Stack
@@ -452,7 +454,7 @@ export default function Index() {
           >
             <TextField
               label="Email Address"
-              type="text"
+              type="email"
               name="emailAddress"
               placeholder="Enter your email address"
               rounded="md"

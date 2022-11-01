@@ -15,6 +15,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Checkbox,
 } from "@chakra-ui/react";
 import { useActionData } from "@remix-run/react";
 
@@ -26,20 +27,33 @@ import {
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
-import { sesSendEmail } from "app/utils/email.server";
+import { ses } from "app/utils/email.server";
+import { db } from "app/utils/db.server";
 
 export const validator = withZod(
   z.object({
-    fullName: z.string().min(1, { message: "Full Name is required" }),
+    fullName: z
+      .string()
+      .min(1, { message: "Full Name is required" })
+      .max(20, { message: "Full Name cannot be more than 20 characters" }),
 
     emailAddress: z
       .string()
       .min(1, { message: "Email is required" })
-      .email("Must be a valid email"),
+      .email("Must be a valid email")
+      .max(50, { message: "Email cannot be more than 50 characters" }),
 
-    subject: z.string().min(1, { message: "Subject is required" }),
+    subject: z
+      .string()
+      .min(1, { message: "Subject is required" })
+      .max(50, { message: "Subject cannot be more than 50 characters" }),
 
-    body: z.string().min(1, { message: "Body is required" }),
+    body: z
+      .string()
+      .min(1, { message: "Body is required" })
+      .max(500, { message: "Subject cannot be more than 500 characters" }),
+
+    subscribe: z.any(),
   })
 );
 
@@ -50,16 +64,41 @@ export async function action({ request }: { request: Request }) {
     return validationError(data.error);
   }
 
-  const { fullName, emailAddress, subject, body } = data.data;
+  const { fullName, emailAddress, subject, body, subscribe } = data.data;
 
-  try {
-    await sesSendEmail(fullName, emailAddress, subject, body);
+  if (subscribe) {
+    const exists = await db.findOne({
+      TableName: "EmailSubscribers",
+      Key: { EmailAddress: { S: emailAddress } },
+    });
 
-    return "success";
-  } catch (err: any) {
-    console.error(err);
+    if (!exists?.Item) {
+      await db.createOne({
+        TableName: "EmailSubscribers",
+        Item: { EmailAddress: { S: emailAddress } },
+      });
+    }
+  }
+
+  const res = await ses.sendEmail({
+    Destination: {
+      ToAddresses: ["mproios@eucrona.com"],
+    },
+    Message: {
+      Body: {
+        Text: { Data: body },
+      },
+
+      Subject: { Data: `New inqury ${fullName} - ${subject}` },
+    },
+    Source: "inquries@eucrona.com",
+  });
+
+  if (res?.$metadata.httpStatusCode !== 200) {
     return "error";
   }
+
+  return "success";
 }
 
 function TextField(props: any) {
@@ -93,6 +132,23 @@ function TextArea(props: any) {
       />
       <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>
+  );
+}
+
+function CheckBox(props: any) {
+  const { getInputProps } = useField(props.name);
+  const actionData = useActionData();
+
+  return (
+    <Checkbox
+      {...props}
+      {...getInputProps()}
+      defaultChecked
+      value={"yes"}
+      disabled={actionData === "success"}
+    >
+      {props.label}
+    </Checkbox>
   );
 }
 
@@ -131,7 +187,7 @@ export default function Contacts() {
         validator={validator}
         method="post"
         id="contactForm"
-        resetAfterSubmit
+        resetAfterSubmit={actionData !== "success"}
       >
         <VStack
           spacing={8}
@@ -180,8 +236,13 @@ export default function Contacts() {
               placeholder="Enter your message"
               rounded="md"
             />
-          </VStack>
-          <VStack w="100%">
+
+            <CheckBox
+              type="checkbox"
+              name="subscribe"
+              label="Subscribe to receive updates and news"
+            />
+
             <SubmitButton
               type="submit"
               colorScheme="primary"

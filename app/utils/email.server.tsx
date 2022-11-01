@@ -1,30 +1,48 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-const ses = new SESClient({ region: "us-east-1" });
+import type {
+  SendEmailCommandOutput,
+  SendEmailCommandInput,
+} from "@aws-sdk/client-ses";
 
-function sesSendEmail(
-  fullName: any,
-  emailAddress: any,
-  subject: any,
-  body: any
-) {
-  const emailParams = {
-    Destination: {
-      ToAddresses: ["mproios@eucrona.com"],
-    },
-    Message: {
-      Body: {
-        Text: { Data: body },
-      },
+const sesClient = new SESClient({ region: "us-east-1" });
 
-      Subject: { Data: `New inqury ${fullName} - ${subject}` },
-    },
-    Source: "inquries@eucrona.com",
-  };
+// function sesSendEmail(
+//   fullName: any,
+//   emailAddress: any,
+//   subject: any,
+//   body: any
+// ) {
+//   const emailParams = {
+//     Destination: {
+//       ToAddresses: ["mproios@eucrona.com"],
+//     },
+//     Message: {
+//       Body: {
+//         Text: { Data: body },
+//       },
 
-  const command = new SendEmailCommand(emailParams);
+//       Subject: { Data: `New inqury ${fullName} - ${subject}` },
+//     },
+//     Source: "inquries@eucrona.com",
+//   };
 
-  return ses.send(command);
-}
+//   const command = new SendEmailCommand(emailParams);
 
-export { sesSendEmail };
+//   return ses.send(command);
+// }
+
+const ses = {
+  sendEmail: async function (params: SendEmailCommandInput) {
+    let data: SendEmailCommandOutput | undefined;
+    try {
+      data = await sesClient.send(new SendEmailCommand(params));
+    } catch (error) {
+      console.error(error);
+    }
+
+    return data;
+  },
+};
+
+export { ses };
