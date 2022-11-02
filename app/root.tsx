@@ -59,6 +59,11 @@ export const links: LinksFunction = () => {
       as: "image",
     },
     {
+      rel: "preload",
+      type: "image/png",
+      href: favicon,
+    },
+    {
       rel: "icon",
       type: "image/png",
       href: favicon,

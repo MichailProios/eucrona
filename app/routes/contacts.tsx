@@ -28,7 +28,8 @@ import {
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
 import { ses } from "app/utils/email.server";
-import { db } from "app/utils/db.server";
+import { EmailSubscribers } from "~/utils/db.server";
+// import { db } from "app/utils/db.server";
 
 export const validator = withZod(
   z.object({
@@ -66,39 +67,36 @@ export async function action({ request }: { request: Request }) {
 
   const { fullName, emailAddress, subject, body, subscribe } = data.data;
 
-  if (subscribe) {
-    const exists = await db.findOne({
-      TableName: "EmailSubscribers",
-      Key: { EmailAddress: { S: emailAddress } },
+  try {
+    if (subscribe) {
+      const exists = await EmailSubscribers.query("EmailAddress")
+        .eq(emailAddress)
+        .exec();
+
+      if (!exists[0]) {
+        await EmailSubscribers.create({ EmailAddress: emailAddress });
+      }
+    }
+
+    await ses.sendEmail({
+      Destination: {
+        ToAddresses: ["mproios@eucrona.com"],
+      },
+      Message: {
+        Body: {
+          Text: { Data: body },
+        },
+
+        Subject: { Data: `New inquiry ${fullName} - ${subject}` },
+      },
+      Source: "inquiries@eucrona.com",
     });
 
-    if (!exists?.Item) {
-      await db.createOne({
-        TableName: "EmailSubscribers",
-        Item: { EmailAddress: { S: emailAddress } },
-      });
-    }
-  }
-
-  const res = await ses.sendEmail({
-    Destination: {
-      ToAddresses: ["mproios@eucrona.com"],
-    },
-    Message: {
-      Body: {
-        Text: { Data: body },
-      },
-
-      Subject: { Data: `New inqury ${fullName} - ${subject}` },
-    },
-    Source: "inquries@eucrona.com",
-  });
-
-  if (res?.$metadata.httpStatusCode !== 200) {
+    return "success";
+  } catch (error) {
+    console.error(error);
     return "error";
   }
-
-  return "success";
 }
 
 function TextField(props: any) {

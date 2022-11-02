@@ -35,9 +35,10 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { FaBook } from "react-icons/fa";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { Link } from "@remix-run/react";
+import { EmailSubscribers, dynamoose } from "~/utils/db.server";
 
 // import type { LoaderFunction } from "@remix-run/node";
-import { db } from "app/utils/db.server";
+// import { db } from "app/utils/db.server";
 
 interface StatData {
   label: string;
@@ -175,21 +176,22 @@ export async function action({ request }: { request: Request }) {
 
   const { emailAddress } = data.data;
 
-  const exists = await db.findOne({
-    TableName: "EmailSubscribers",
-    Key: { EmailAddress: { S: emailAddress } },
-  });
+  try {
+    const exists = await EmailSubscribers.query("EmailAddress")
+      .eq(emailAddress)
+      .exec();
 
-  if (exists?.Item) {
-    return "exists";
+    if (exists[0]) {
+      return "exists";
+    }
+
+    await EmailSubscribers.create({ EmailAddress: emailAddress });
+
+    return "success";
+  } catch (error) {
+    console.error(error);
+    return "error";
   }
-
-  await db.createOne({
-    TableName: "EmailSubscribers",
-    Item: { EmailAddress: { S: emailAddress } },
-  });
-
-  return "success";
 }
 
 function TextField(props: any) {
