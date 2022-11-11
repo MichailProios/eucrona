@@ -220,7 +220,7 @@ function NavbarHeader({
             fontWeight={400}
             display={{ base: "none", lg: "flex" }}
             as={Link}
-            href="https://cloud.eucrona.com"
+            href="https://cloud.eucrona.com/login"
             style={{ textDecoration: "none" }}
             variant={"solid"}
           >
@@ -233,6 +233,9 @@ function NavbarHeader({
             variant="solid"
             colorScheme={"primary"}
             display={{ base: "none", lg: "flex" }}
+            as={Link}
+            style={{ textDecoration: "none" }}
+            href="https://cloud.eucrona.com/register"
           >
             Sign Up
           </Button>
@@ -333,7 +336,7 @@ function NavbarDrawer({
               width={"100%"}
               fontWeight={400}
               as={Link}
-              href="https://cloud.eucrona.com"
+              href="https://cloud.eucrona.com/login"
               style={{ textDecoration: "none" }}
               variant={"solid"}
             >
@@ -346,6 +349,9 @@ function NavbarDrawer({
               fontWeight={600}
               variant="solid"
               colorScheme={"primary"}
+              as={Link}
+              style={{ textDecoration: "none" }}
+              href="https://cloud.eucrona.com/register"
             >
               Sign Up
             </Button>

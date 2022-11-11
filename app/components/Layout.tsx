@@ -11,6 +11,7 @@ import {
   Center,
   Skeleton,
   Spinner,
+  Progress,
 } from "@chakra-ui/react";
 
 import { animateScroll as scroll } from "react-scroll";
@@ -25,6 +26,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useWindowDimensions } from "app/utils/hooks";
 import { useScrollButtonVisibility } from "app/utils/hooks";
 import { ChevronUpIcon } from "@chakra-ui/icons";
+import { useTransition } from "@remix-run/react";
 
 interface LayoutProps {
   children: ReactNode;
@@ -57,6 +59,7 @@ export default function Layout({ children }: LayoutProps) {
   const { height } = useWindowDimensions();
 
   const showButton = useScrollButtonVisibility();
+  const transition = useTransition();
 
   useEffect(() => {
     if (ExecutionEnvironment.canUseDOM) {
@@ -85,6 +88,17 @@ export default function Layout({ children }: LayoutProps) {
       <Navbar
         navigationLinks={navigationLinks}
         eucronaAccounts={eucronaAccounts}
+      />
+      <Progress
+        isIndeterminate
+        display={transition.state !== "idle" ? "flex" : "none"}
+        size="xs"
+        position="fixed"
+        top={"64px"}
+        zIndex={800}
+        width={"100%"}
+        backgroundColor="transparent"
+        colorScheme={"primary"}
       />
 
       <Box display={{ base: "none", md: "flex" }}>
