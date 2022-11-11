@@ -37,25 +37,25 @@ interface IFeature1 {
 
 const Solution: IFeature1[] = [
   {
-    heading: "Learn with flashcards",
+    heading: "Undefined Item",
     content:
-      "The main part of the learning process is using flashcards, you see a question, then you answer it.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     icon: MdOutlineFlashlightOn,
   },
   {
-    heading: "Never forget",
-    content: `With our latest SRS algorithm, you will never forget what you've learned. The more you remember something, the less often the system will ask you to review it.`,
+    heading: "Undefined Item",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     icon: SiMinds,
   },
   {
-    heading: "Tiny bits of information",
+    heading: "Undefined Item",
     content:
-      "Instead of showing you a wall of text that will take you a long time to read and then that you quickly forget, we show you tiny bits of information every day.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     icon: MdPermDeviceInformation,
   },
   {
-    heading: "Community",
-    content: `Keep your learning streak going, see stats of what you've learned and share it with others via your public profile. You can also join our private discord server!`,
+    heading: "Undefined Item",
+    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
     icon: MdOutlinePersonPin,
   },
 ];

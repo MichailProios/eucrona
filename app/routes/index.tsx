@@ -47,25 +47,25 @@ interface StatData {
 
 const statData: StatData[] = [
   {
-    label: "Active Applications ",
+    label: "Undefined Item",
     score: ">10",
   },
   {
-    label: "Stars on GitHub",
+    label: "Undefined Item",
     score: "77k",
   },
   {
-    label: "Contributors",
+    label: "Undefined Item",
     score: "2.4k",
   },
   {
-    label: "Followers on Twitter",
+    label: "Undefined Item",
     score: "17k",
   },
 ];
 
 const planList = [
-  "Customer obsessed. We put our customers front & center.",
+  // "Customer obsessed. We put our customers front & center.",
   "Transparency. Most of our work is public.",
   "Freedom. We work from anywhere in the world.",
   "Autonomy. We want to create a safe, high-trust team.",
